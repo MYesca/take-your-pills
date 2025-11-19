@@ -51,7 +51,7 @@ workflow_status:
   - id: "create-design"
     phase: 1
     name: "Planning"
-    status: "conditional"
+    status: "docs/ux-design-specification.md"
     conditional: "if_has_ui"
     agent: "ux-designer"
     command: "create-ux-design"
