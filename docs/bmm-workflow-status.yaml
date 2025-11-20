@@ -61,7 +61,7 @@ workflow_status:
   - id: "create-architecture"
     phase: 2
     name: "Solutioning"
-    status: "required"
+    status: "docs/architecture.md"
     agent: "architect"
     command: "architecture"
     output: "System architecture document"
@@ -70,7 +70,7 @@ workflow_status:
   - id: "create-epics-and-stories"
     phase: 2
     name: "Solutioning"
-    status: "required"
+    status: "docs/epics.md"
     agent: "pm"
     command: "create-epics-and-stories"
     note: "Required: Break down PRD into implementable epics and stories with full context (PRD + UX + Architecture)"
