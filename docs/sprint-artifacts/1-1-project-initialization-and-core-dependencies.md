@@ -1,0 +1,181 @@
+# Story 1.1: Project Initialization and Core Dependencies
+
+Status: ready-for-dev
+
+## Story
+
+As a developer,
+I want the project initialized with Next.js 15, TypeScript, and Tailwind CSS,
+So that I have a solid foundation for building the medication tracking application.
+
+## Acceptance Criteria
+
+1. **AC1:** Given I am setting up the project for the first time, when I run `npx create-next-app@latest takeyourpills --typescript --tailwind --app --no-src-dir`, then the project structure is created with:
+   - Next.js 15 App Router structure
+   - TypeScript configuration (`tsconfig.json`)
+   - Tailwind CSS configuration (`tailwind.config.ts`)
+   - Base project files (package.json, .gitignore, etc.)
+
+2. **AC2:** When I install additional dependencies, then the following packages are installed:
+   - Prisma and @prisma/client
+   - @azure/msal-react and @azure/msal-node
+   - cron-parser and node-cron
+   - date-fns and date-fns-tz
+   - zod for validation
+   - @tanstack/react-query for data fetching
+
+3. **AC3:** When I initialize shadcn/ui with `npx shadcn-ui@latest init`, then shadcn/ui is configured with Tailwind CSS integration and components can be installed.
+
+4. **AC4:** When I run `npm run dev`, then the development server starts successfully without errors.
+
+5. **AC5:** When I create `.env.example` file, then all required environment variables are documented with descriptions but without actual values.
+
+## Tasks / Subtasks
+
+- [ ] **Task 1: Initialize Next.js Project** (AC: #1)
+  - [ ] Run `npx create-next-app@latest takeyourpills --typescript --tailwind --app --no-src-dir`
+  - [ ] Verify project structure matches architecture specification
+  - [ ] Verify `tsconfig.json` exists and TypeScript is configured
+  - [ ] Verify `tailwind.config.ts` exists and Tailwind CSS is configured
+  - [ ] Verify `package.json` exists with Next.js 15 dependency
+  - [ ] Verify `.gitignore` exists with appropriate exclusions
+
+- [ ] **Task 2: Install Core Dependencies** (AC: #2)
+  - [ ] Install Prisma packages: `npm install @prisma/client prisma`
+  - [ ] Install MSAL packages: `npm install @azure/msal-react @azure/msal-node`
+  - [ ] Install CRON packages: `npm install cron-parser node-cron`
+  - [ ] Install date utilities: `npm install date-fns date-fns-tz`
+  - [ ] Install validation: `npm install zod`
+  - [ ] Install data fetching: `npm install @tanstack/react-query`
+  - [ ] Verify all packages are listed in `package.json` dependencies
+
+- [ ] **Task 3: Install Development Dependencies** (AC: #2)
+  - [ ] Install TypeScript types: `npm install -D @types/node-cron`
+  - [ ] Install testing framework: `npm install -D vitest @testing-library/react @testing-library/jest-dom`
+  - [ ] Install E2E testing: `npm install -D @playwright/test`
+  - [ ] Verify all dev packages are listed in `package.json` devDependencies
+
+- [ ] **Task 4: Initialize shadcn/ui** (AC: #3)
+  - [ ] Run `npx shadcn-ui@latest init`
+  - [ ] Configure shadcn/ui with Tailwind CSS integration (follow prompts)
+  - [ ] Verify `components.json` is created
+  - [ ] Verify shadcn/ui configuration is correct
+
+- [ ] **Task 5: Create Environment Variable Template** (AC: #5)
+  - [ ] Create `.env.example` file in project root
+  - [ ] Document DATABASE_URL with format example
+  - [ ] Document AZURE_CLIENT_ID placeholder
+  - [ ] Document AZURE_CLIENT_SECRET placeholder
+  - [ ] Document AZURE_TENANT_ID placeholder
+  - [ ] Document AZURE_REDIRECT_URI placeholder
+  - [ ] Add descriptive comments for each variable
+
+- [ ] **Task 6: Verify Development Server** (AC: #4)
+  - [ ] Run `npm run dev` command
+  - [ ] Verify development server starts without errors
+  - [ ] Verify server is accessible at http://localhost:3000 (or configured port)
+  - [ ] Verify no TypeScript errors in console
+  - [ ] Verify Tailwind CSS is working (check for styling)
+
+- [ ] **Task 7: Update .gitignore** (AC: #1)
+  - [ ] Ensure `.gitignore` includes `node_modules`
+  - [ ] Ensure `.gitignore` includes `.env.local`
+  - [ ] Ensure `.gitignore` includes `.next`
+  - [ ] Ensure `.gitignore` includes other Next.js standard exclusions
+  - [ ] Verify sensitive files will not be committed
+
+## Dev Notes
+
+### Architecture Patterns and Constraints
+
+- **Project Structure:** Follow Next.js 15 App Router structure from architecture document [Source: docs/architecture.md#Project-Structure]
+- **Dependency Versions:** Use versions specified in architecture document decision table [Source: docs/architecture.md#Decision-Summary]
+- **TypeScript:** Next.js starter template includes TypeScript configuration; ensure strict mode is enabled (Story 1.4)
+- **Tailwind CSS:** Next.js starter template includes Tailwind CSS setup; verify configuration matches UX design requirements [Source: docs/ux-design-specification.md#Design-System-Foundation]
+
+### Source Tree Components
+
+**Files to Create:**
+- `.env.example` - Environment variable template
+
+**Files to Modify:**
+- `.gitignore` - Ensure proper exclusions for sensitive files
+
+**Files Generated by Commands:**
+- `package.json` - Project dependencies and scripts (created by create-next-app)
+- `tsconfig.json` - TypeScript configuration (created by create-next-app)
+- `tailwind.config.ts` - Tailwind CSS configuration (created by create-next-app)
+- `next.config.js` or `next.config.mjs` - Next.js configuration (created by create-next-app)
+- `components.json` - shadcn/ui configuration (created by shadcn-ui init)
+
+### Testing Standards
+
+- **Unit Testing:** Vitest framework installed in this story, configuration in Story 1.4
+- **Integration Testing:** Vitest setup deferred to Story 1.4
+- **E2E Testing:** Playwright installed in this story, configuration deferred to Story 1.4
+
+### Key Technical Decisions
+
+1. **Next.js 15 App Router:** Chosen for full-stack capabilities and TypeScript support [Source: docs/architecture.md#ADR-001]
+2. **TypeScript:** Provides type safety across frontend and backend [Source: docs/architecture.md#Decision-Summary]
+3. **Tailwind CSS:** Matches UX design specification [Source: docs/ux-design-specification.md#Design-System-Choice]
+4. **shadcn/ui:** Component library specified in UX design [Source: docs/ux-design-specification.md#Design-System-Choice]
+5. **Dependency Management:** npm package manager (standard with Next.js starter)
+
+### Project Structure Notes
+
+**Alignment with Architecture:**
+- Project root structure matches architecture specification [Source: docs/architecture.md#Project-Structure]
+- `app/` directory created by Next.js App Router (will be populated in later stories)
+- `components/` directory will be created when shadcn/ui components are added
+- `lib/` directory will be created in Story 1.2 for Prisma client
+- `prisma/` directory will be created in Story 1.2 for database schema
+
+**Naming Conventions:**
+- File and folder names: `kebab-case` [Source: docs/architecture.md#Naming-Conventions]
+- Component files: `PascalCase` (e.g., `MedicationCard.tsx`) - will be created in later stories
+- Configuration files: Standard Next.js/TypeScript naming (`tsconfig.json`, `tailwind.config.ts`)
+
+### Learnings from Previous Story
+
+**First story in epic - no predecessor context**
+
+### References
+
+- **Architecture Document:** [Source: docs/architecture.md#Project-Initialization]
+- **Epic Context:** [Source: docs/epic-1-context.md]
+- **Epic Story Details:** [Source: docs/epics.md#Story-1.1]
+- **UX Design System:** [Source: docs/ux-design-specification.md#Design-System-Foundation]
+- **Next.js Documentation:** https://nextjs.org/docs
+- **shadcn/ui Documentation:** https://ui.shadcn.com/docs
+- **Prisma Documentation:** https://www.prisma.io/docs
+- **MSAL React Documentation:** https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-react
+
+## Dev Agent Record
+
+### Context Reference
+
+- `docs/sprint-artifacts/1-1-project-initialization-and-core-dependencies.context.xml`
+
+### Agent Model Used
+
+<!-- Will be populated during implementation -->
+
+### Debug Log References
+
+<!-- Will be populated during implementation -->
+
+### Completion Notes List
+
+<!-- Will be populated after story completion -->
+
+### File List
+
+<!-- Will be populated after story completion -->
+
+---
+
+**Epic:** 1 - Foundation & Project Setup  
+**Prerequisites:** None (first story in epic)  
+**Next Story:** Story 1.2 - Database Schema and Prisma Setup
+

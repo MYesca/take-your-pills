@@ -1,0 +1,264 @@
+<story-context id="bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>1.1</storyId>
+    <title>Project Initialization and Core Dependencies</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-19</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-1-project-initialization-and-core-dependencies.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>developer</asA>
+    <iWant>the project initialized with Next.js 15, TypeScript, and Tailwind CSS</iWant>
+    <soThat>I have a solid foundation for building the medication tracking application</soThat>
+    <tasks>
+      <task id="1" ac="1">
+        <title>Initialize Next.js Project</title>
+        <subtasks>
+          <subtask>Run `npx create-next-app@latest takeyourpills --typescript --tailwind --app --no-src-dir`</subtask>
+          <subtask>Verify project structure matches architecture specification</subtask>
+          <subtask>Verify `tsconfig.json` exists and TypeScript is configured</subtask>
+          <subtask>Verify `tailwind.config.ts` exists and Tailwind CSS is configured</subtask>
+          <subtask>Verify `package.json` exists with Next.js 15 dependency</subtask>
+          <subtask>Verify `.gitignore` exists with appropriate exclusions</subtask>
+        </subtasks>
+      </task>
+      <task id="2" ac="2">
+        <title>Install Core Dependencies</title>
+        <subtasks>
+          <subtask>Install Prisma packages: `npm install @prisma/client prisma`</subtask>
+          <subtask>Install MSAL packages: `npm install @azure/msal-react @azure/msal-node`</subtask>
+          <subtask>Install CRON packages: `npm install cron-parser node-cron`</subtask>
+          <subtask>Install date utilities: `npm install date-fns date-fns-tz`</subtask>
+          <subtask>Install validation: `npm install zod`</subtask>
+          <subtask>Install data fetching: `npm install @tanstack/react-query`</subtask>
+          <subtask>Verify all packages are listed in `package.json` dependencies</subtask>
+        </subtasks>
+      </task>
+      <task id="3" ac="2">
+        <title>Install Development Dependencies</title>
+        <subtasks>
+          <subtask>Install TypeScript types: `npm install -D @types/node-cron`</subtask>
+          <subtask>Install testing framework: `npm install -D vitest @testing-library/react @testing-library/jest-dom`</subtask>
+          <subtask>Install E2E testing: `npm install -D @playwright/test`</subtask>
+          <subtask>Verify all dev packages are listed in `package.json` devDependencies</subtask>
+        </subtasks>
+      </task>
+      <task id="4" ac="3">
+        <title>Initialize shadcn/ui</title>
+        <subtasks>
+          <subtask>Run `npx shadcn-ui@latest init`</subtask>
+          <subtask>Configure shadcn/ui with Tailwind CSS integration (follow prompts)</subtask>
+          <subtask>Verify `components.json` is created</subtask>
+          <subtask>Verify shadcn/ui configuration is correct</subtask>
+        </subtasks>
+      </task>
+      <task id="5" ac="5">
+        <title>Create Environment Variable Template</title>
+        <subtasks>
+          <subtask>Create `.env.example` file in project root</subtask>
+          <subtask>Document DATABASE_URL with format example</subtask>
+          <subtask>Document AZURE_CLIENT_ID placeholder</subtask>
+          <subtask>Document AZURE_CLIENT_SECRET placeholder</subtask>
+          <subtask>Document AZURE_TENANT_ID placeholder</subtask>
+          <subtask>Document AZURE_REDIRECT_URI placeholder</subtask>
+          <subtask>Add descriptive comments for each variable</subtask>
+        </subtasks>
+      </task>
+      <task id="6" ac="4">
+        <title>Verify Development Server</title>
+        <subtasks>
+          <subtask>Run `npm run dev` command</subtask>
+          <subtask>Verify development server starts without errors</subtask>
+          <subtask>Verify server is accessible at http://localhost:3000 (or configured port)</subtask>
+          <subtask>Verify no TypeScript errors in console</subtask>
+          <subtask>Verify Tailwind CSS is working (check for styling)</subtask>
+        </subtasks>
+      </task>
+      <task id="7" ac="1">
+        <title>Update .gitignore</title>
+        <subtasks>
+          <subtask>Ensure `.gitignore` includes `node_modules`</subtask>
+          <subtask>Ensure `.gitignore` includes `.env.local`</subtask>
+          <subtask>Ensure `.gitignore` includes `.next`</subtask>
+          <subtask>Ensure `.gitignore` includes other Next.js standard exclusions</subtask>
+          <subtask>Verify sensitive files will not be committed</subtask>
+        </subtasks>
+      </task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="AC1">
+      <description>Given I am setting up the project for the first time, when I run `npx create-next-app@latest takeyourpills --typescript --tailwind --app --no-src-dir`, then the project structure is created with: Next.js 15 App Router structure, TypeScript configuration (`tsconfig.json`), Tailwind CSS configuration (`tailwind.config.ts`), Base project files (package.json, .gitignore, etc.)</description>
+    </criterion>
+    <criterion id="AC2">
+      <description>When I install additional dependencies, then the following packages are installed: Prisma and @prisma/client, @azure/msal-react and @azure/msal-node, cron-parser and node-cron, date-fns and date-fns-tz, zod for validation, @tanstack/react-query for data fetching</description>
+    </criterion>
+    <criterion id="AC3">
+      <description>When I initialize shadcn/ui with `npx shadcn-ui@latest init`, then shadcn/ui is configured with Tailwind CSS integration and components can be installed</description>
+    </criterion>
+    <criterion id="AC4">
+      <description>When I run `npm run dev`, then the development server starts successfully without errors</description>
+    </criterion>
+    <criterion id="AC5">
+      <description>When I create `.env.example` file, then all required environment variables are documented with descriptions but without actual values</description>
+    </criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>TakeYourPills - Architecture</title>
+        <section>Project Initialization</section>
+        <snippet>Starter Template: Next.js 15 with TypeScript and Tailwind CSS. Initialization Command: `npx create-next-app@latest takeyourpills --typescript --tailwind --app --no-src-dir`. Post-Initialization Setup includes installing Prisma, MSAL, CRON libraries, date utilities, validation, and data fetching packages.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>TakeYourPills - Architecture</title>
+        <section>Decision Summary</section>
+        <snippet>Technology stack decisions: Next.js 15 App Router, TypeScript 5.x, Tailwind CSS 3.x, shadcn/ui, PostgreSQL 15+, Prisma, Microsoft Entra External ID, MSAL libraries, cron-parser, date-fns-tz, React Query, Zod. All versions specified in decision table.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>TakeYourPills - Architecture</title>
+        <section>Project Structure</section>
+        <snippet>Project structure includes: app/ directory for Next.js App Router routes, components/ for reusable UI components, lib/ for utilities, prisma/ for database schema, __tests__/ for test files. File naming conventions: kebab-case for files/folders, PascalCase for components.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epic-1-context.md</path>
+        <title>Epic Technical Specification: Foundation & Project Setup</title>
+        <section>Story 1.1 Implementation Steps</section>
+        <snippet>Step-by-step implementation guide: 1) Initialize Next.js project with create-next-app command, 2) Install core dependencies (Prisma, MSAL, CRON, date utils, Zod, React Query), 3) Install dev dependencies (types, Vitest, Playwright), 4) Initialize shadcn/ui, 5) Create .env.example, 6) Verify development server starts.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epic-1-context.md</path>
+        <title>Epic Technical Specification: Foundation & Project Setup</title>
+        <section>Dependencies and Integrations</section>
+        <snippet>Core dependencies listed with versions: Next.js 15, React 18, TypeScript 5, Tailwind CSS 3, shadcn/ui, Prisma, MSAL libraries, cron-parser, node-cron, date-fns, date-fns-tz, Zod, React Query. Development dependencies: Vitest, React Testing Library, Playwright, ESLint, TypeScript types.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>TakeYourPills UX Design Specification</title>
+        <section>Design System Foundation</section>
+        <snippet>Design system choice: shadcn/ui + Tailwind CSS. Rationale: Highly customizable, built on Radix UI primitives with excellent accessibility, modern and performant stack. Components provided: Form components, layout components, feedback components, navigation components, overlay components. Version: Latest shadcn/ui with Tailwind CSS 3.x.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>TakeYourPills - Epics and Stories</title>
+        <section>Story 1.1: Project Initialization and Core Dependencies</section>
+        <snippet>User story: As a developer, I want the project initialized with Next.js 15, TypeScript, and Tailwind CSS, So that I have a solid foundation for building the medication tracking application. Acceptance criteria include project structure creation, dependency installation, shadcn/ui initialization, development server verification, and environment variable template creation.</snippet>
+      </doc>
+      <doc>
+        <path>docs/prd.md</path>
+        <title>TakeYourPills - Product Requirements Document</title>
+        <section>Project Classification</section>
+        <snippet>Technical Type: web_app. Single Page Application (SPA) accessible via web browsers. Responsive design for desktop and mobile browsers. Real-time medication tracking interface. Browser-based application (no native mobile app in MVP).</snippet>
+      </doc>
+    </docs>
+    <code>
+      <!-- No existing code artifacts for Story 1.1 - this is project initialization -->
+    </code>
+    <dependencies>
+      <ecosystem name="node">
+        <package name="next" version="^15.0.0" />
+        <package name="react" version="^18.0.0" />
+        <package name="react-dom" version="^18.0.0" />
+        <package name="typescript" version="^5.0.0" />
+        <package name="tailwindcss" version="^3.0.0" />
+        <package name="@prisma/client" version="latest" />
+        <package name="prisma" version="latest" />
+        <package name="@azure/msal-react" version="latest" />
+        <package name="@azure/msal-node" version="latest" />
+        <package name="cron-parser" version="latest" />
+        <package name="node-cron" version="latest" />
+        <package name="date-fns" version="latest" />
+        <package name="date-fns-tz" version="latest" />
+        <package name="zod" version="latest" />
+        <package name="@tanstack/react-query" version="latest" />
+      </ecosystem>
+      <ecosystem name="node-dev">
+        <package name="@types/node-cron" version="latest" />
+        <package name="vitest" version="latest" />
+        <package name="@testing-library/react" version="latest" />
+        <package name="@testing-library/jest-dom" version="latest" />
+        <package name="@playwright/test" version="latest" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <type>Architecture</type>
+      <description>Project structure must follow Next.js 15 App Router structure as defined in architecture document</description>
+      <source>docs/architecture.md#Project-Structure</source>
+    </constraint>
+    <constraint>
+      <type>Dependency</type>
+      <description>All dependency versions must match those specified in architecture document decision table</description>
+      <source>docs/architecture.md#Decision-Summary</source>
+    </constraint>
+    <constraint>
+      <type>Configuration</type>
+      <description>shadcn/ui must be configured with Tailwind CSS integration as specified in UX design</description>
+      <source>docs/ux-design-specification.md#Design-System-Foundation</source>
+    </constraint>
+    <constraint>
+      <type>Security</type>
+      <description>Environment variables must not be committed to git - use .env.local (gitignored) and .env.example (documented)</description>
+      <source>docs/architecture.md#Development-Environment</source>
+    </constraint>
+    <constraint>
+      <type>Naming</type>
+      <description>File and folder names must use kebab-case convention</description>
+      <source>docs/architecture.md#Naming-Conventions</source>
+    </constraint>
+    <constraint>
+      <type>Project Structure</type>
+      <description>Project must use Next.js App Router (not Pages Router) - specified by --app flag in create-next-app command</description>
+      <source>docs/architecture.md#Project-Initialization</source>
+    </constraint>
+  </constraints>
+
+  <interfaces>
+    <!-- No interfaces defined for Story 1.1 - this is project initialization -->
+  </interfaces>
+
+  <tests>
+    <standards>
+      Testing framework setup is deferred to Story 1.4. For Story 1.1, verification is manual:
+      - Verify project structure exists and matches architecture specification
+      - Verify all dependencies are installed correctly (check package.json)
+      - Verify development server starts without errors
+      - Verify shadcn/ui initialization completes successfully
+      - Verify .env.example file contains all required variables
+      Future testing: Vitest for unit/integration tests, Playwright for E2E tests (configured in Story 1.4)
+    </standards>
+    <locations>
+      <location>__tests__/unit/</location>
+      <location>__tests__/integration/</location>
+      <location>__tests__/e2e/</location>
+    </locations>
+    <ideas>
+      <test ac="AC1">
+        <description>Verify Next.js project structure: Check that app/ directory exists, tsconfig.json exists, tailwind.config.ts exists, package.json contains Next.js 15 dependency</description>
+      </test>
+      <test ac="AC2">
+        <description>Verify dependencies installed: Check package.json contains all required dependencies (Prisma, MSAL, CRON, date utils, Zod, React Query) and dev dependencies (types, Vitest, Playwright)</description>
+      </test>
+      <test ac="AC3">
+        <description>Verify shadcn/ui configuration: Check components.json exists, verify Tailwind CSS integration in configuration</description>
+      </test>
+      <test ac="AC4">
+        <description>Verify development server: Run `npm run dev` and verify server starts on expected port without TypeScript or runtime errors</description>
+      </test>
+      <test ac="AC5">
+        <description>Verify .env.example: Check file exists, contains DATABASE_URL, AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, AZURE_TENANT_ID, AZURE_REDIRECT_URI with descriptions but no actual values</description>
+      </test>
+    </ideas>
+  </tests>
+</story-context>
+
