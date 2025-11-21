@@ -1,0 +1,286 @@
+<story-context id="bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>2</epicId>
+    <storyId>2.1</storyId>
+    <title>Microsoft Entra External ID Integration (Frontend)</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-19</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/2-1-microsoft-entra-external-id-integration-frontend.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>user</asA>
+    <iWant>to log in using my Microsoft Entra External ID account</iWant>
+    <soThat>I can securely access my medication tracking data</soThat>
+    <tasks>
+      <task id="1" ac="1,3">
+        <title>Create Login Page</title>
+        <subtasks>
+          <subtask>Create `app/(auth)/login/page.tsx` component</subtask>
+          <subtask>Add "Sign in with Microsoft" button using shadcn/ui Button component</subtask>
+          <subtask>Style login page with Tailwind CSS (centered layout, clean design)</subtask>
+          <subtask>Add check for existing authentication status (redirect if already logged in)</subtask>
+          <subtask>Handle loading states during authentication</subtask>
+        </subtasks>
+      </task>
+      <task id="2" ac="1">
+        <title>Implement MSAL Login Flow</title>
+        <subtasks>
+          <subtask>Import MSAL instance from `lib/auth/msal.ts` (from Story 1.3)</subtask>
+          <subtask>Implement login button click handler</subtask>
+          <subtask>Call MSAL `loginRedirect()` or `loginPopup()` method</subtask>
+          <subtask>Handle login errors with try/catch block</subtask>
+          <subtask>Display error messages to user on authentication failure</subtask>
+        </subtasks>
+      </task>
+      <task id="3" ac="1,4">
+        <title>Create OAuth Callback Handler</title>
+        <subtasks>
+          <subtask>Create `app/api/auth/callback/route.ts` API route</subtask>
+          <subtask>Handle OAuth callback from Microsoft Entra External ID</subtask>
+          <subtask>Extract authorization code from callback</subtask>
+          <subtask>Use MSAL to exchange code for tokens (automatic)</subtask>
+          <subtask>Extract user information from ID token (email, external ID/sub/oid)</subtask>
+        </subtasks>
+      </task>
+      <task id="4" ac="4">
+        <title>Create/Update User Record</title>
+        <subtasks>
+          <subtask>Query database for user by externalId using Prisma Client</subtask>
+          <subtask>If user doesn't exist, create new user record with: externalId (from token claims: sub or oid), email (from token claims), timezone (default: "UTC")</subtask>
+          <subtask>If user exists, update email if changed (optional)</subtask>
+          <subtask>Store user ID for session context</subtask>
+        </subtasks>
+      </task>
+      <task id="5" ac="1,3">
+        <title>Handle Redirects and Session</title>
+        <subtasks>
+          <subtask>Redirect authenticated users to dashboard (`/`)</subtask>
+          <subtask>Handle redirect state (preserve intended destination if user was redirected to login)</subtask>
+          <subtask>Ensure MSAL stores tokens in memory (verify no localStorage usage)</subtask>
+          <subtask>Verify session is established for subsequent requests</subtask>
+        </subtasks>
+      </task>
+      <task id="6" ac="2">
+        <title>Error Handling</title>
+        <subtasks>
+          <subtask>Display user-friendly error messages on login page</subtask>
+          <subtask>Handle network errors during authentication</subtask>
+          <subtask>Handle Microsoft Entra ID service errors</subtask>
+          <subtask>Allow user to retry login after error</subtask>
+          <subtask>Log authentication errors (without sensitive data)</subtask>
+        </subtasks>
+      </task>
+      <task id="7" ac="all">
+        <title>Testing</title>
+        <subtasks>
+          <subtask>Unit test: Login page renders correctly</subtask>
+          <subtask>Unit test: MSAL login method is called on button click</subtask>
+          <subtask>Unit test: OAuth callback handler processes authorization code</subtask>
+          <subtask>Unit test: User record creation logic (mock database)</subtask>
+          <subtask>Integration test: End-to-end login flow (mock Microsoft Entra ID)</subtask>
+          <subtask>Integration test: User record creation on first login</subtask>
+          <subtask>Integration test: User record lookup on subsequent login</subtask>
+        </subtasks>
+      </task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="AC1">
+      <description>Given I am on the login page, when I click "Sign in with Microsoft", then: I am redirected to Microsoft Entra External ID login page, I can enter my Microsoft account credentials, After successful authentication, I am redirected back to the application, My access token is stored by MSAL (in-memory, not localStorage), I am redirected to the dashboard</description>
+    </criterion>
+    <criterion id="AC2">
+      <description>When authentication fails, then: I see an error message explaining the issue, I can retry the login process</description>
+    </criterion>
+    <criterion id="AC3">
+      <description>When I am already authenticated, then: I am automatically redirected to the dashboard, I don't see the login page</description>
+    </criterion>
+    <criterion id="AC4">
+      <description>When I log in for the first time, then: A user record is created in the database with my email and external ID, My user ID is available for subsequent requests</description>
+    </criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/sprint-artifacts/epic-2-context.md</path>
+        <title>Epic Technical Specification: User Authentication</title>
+        <section>Story 2.1: Microsoft Entra External ID Integration (Frontend)</section>
+        <snippet>Story 2.1 creates login page with Microsoft authentication button, implements MSAL React authentication flow (loginRedirect or loginPopup), handles OAuth callback from Microsoft Entra External ID, extracts user information from ID token (email, external ID), creates or updates user record in database on first login, redirects authenticated users to dashboard, and handles authentication errors gracefully.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/epic-2-context.md</path>
+        <title>Epic Technical Specification: User Authentication</title>
+        <section>Detailed Design - Services and Modules</section>
+        <snippet>Frontend Authentication Module (Story 2.1): Responsibility is to handle user login flow via Microsoft Entra External ID. Components include login page component (app/(auth)/login/page.tsx), OAuth callback handler (app/api/auth/callback/route.ts), and MSAL React integration (uses lib/auth/msal.ts from Epic 1).</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/epic-2-context.md</path>
+        <title>Epic Technical Specification: User Authentication</title>
+        <section>APIs and Interfaces</section>
+        <snippet>POST /api/auth/callback: Purpose is to handle OAuth callback from Microsoft Entra External ID. Flow: 1) Receive authorization code from Microsoft, 2) Exchange code for tokens (handled by MSAL), 3) Extract user info from ID token, 4) Create or update user record in database, 5) Redirect to dashboard.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>TakeYourPills - Epics and Stories</title>
+        <section>Story 2.1: Microsoft Entra External ID Integration (Frontend)</section>
+        <snippet>User story: As a user, I want to log in using my Microsoft Entra External ID account, So that I can securely access my medication tracking data. Technical notes: Use MSAL React loginRedirect or loginPopup method, handle OAuth callback in /api/auth/callback route, extract user info from ID token (email, external ID), create or update user record in database on first login. FR Coverage: FR1, FR2.</snippet>
+      </doc>
+      <doc>
+        <path>docs/prd.md</path>
+        <title>TakeYourPills - Product Requirements Document</title>
+        <section>User Account &amp; Access</section>
+        <snippet>FR1: Users can create accounts using Microsoft Entra External ID (OpenID Connect). FR2: Users can log in securely and maintain authenticated sessions. NFR1: All authentication must use OpenID Connect standard with Microsoft Entra External ID.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>TakeYourPills - Architecture</title>
+        <section>Authentication Pattern</section>
+        <snippet>Flow: 1) Frontend: User authenticates via Microsoft Entra External ID (MSAL React), 2) Frontend: Receives access token, 3) Frontend: Includes token in API requests (Authorization header: Bearer token), 4) Backend: Validates token on each API request using MSAL Node, 5) Backend: Extracts user ID from token claims, 6) Backend: Enforces data isolation. Token Storage: Frontend: In-memory (MSAL handles this), No localStorage/sessionStorage for tokens (MSAL best practice).</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>TakeYourPills - Architecture</title>
+        <section>Security Architecture</section>
+        <snippet>Authentication Provider: Microsoft Entra External ID (Azure AD B2C). Protocol: OpenID Connect. Frontend: @azure/msal-react for authentication flow. Backend: @azure/msal-node for token validation. Token Flow: User authenticates via Microsoft Entra External ID, MSAL React receives access token + ID token, Frontend includes access token in API requests: Authorization: Bearer token, Backend API routes validate token using MSAL Node, Backend extracts user ID from token claims, All database queries filter by user ID (data isolation).</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>takeyourpills/lib/auth/msal-browser.ts</path>
+        <kind>service</kind>
+        <symbol>getMsalInstance, msalConfiguration</symbol>
+        <lines>1-72</lines>
+        <reason>MSAL Browser configuration and instance getter function. Provides PublicClientApplication instance for React components. Already configured with Azure credentials from environment variables. Use getMsalInstance() to get MSAL instance for login flows.</reason>
+      </artifact>
+      <artifact>
+        <path>takeyourpills/lib/prisma/client.ts</path>
+        <kind>service</kind>
+        <symbol>prisma</symbol>
+        <lines>1-14</lines>
+        <reason>Prisma Client singleton instance. Use this to query/create user records in database. Already configured with proper logging and singleton pattern. Import and use for database operations in OAuth callback handler.</reason>
+      </artifact>
+      <artifact>
+        <path>takeyourpills/components/providers/MsalProvider.tsx</path>
+        <kind>component</kind>
+        <symbol>MsalProvider</symbol>
+        <reason>MSAL React provider component. Wraps application with MSAL context. Already set up in app/layout.tsx. Use useMsal hook from @azure/msal-react in login page to access MSAL instance and methods.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <ecosystem name="node">
+        <package name="@azure/msal-react" version="^3.0.22" />
+        <package name="@azure/msal-browser" version="^3.0.22" />
+        <package name="@prisma/client" version="^7.0.0" />
+        <package name="next" version="16.0.3" />
+        <package name="react" version="19.2.0" />
+        <package name="react-dom" version="19.2.0" />
+      </ecosystem>
+      <ecosystem name="node-dev">
+        <package name="vitest" version="^4.0.12" />
+        <package name="@testing-library/react" version="^16.3.0" />
+        <package name="@testing-library/jest-dom" version="^6.9.1" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <type>Architecture</type>
+      <description>Must use Microsoft Entra External ID for authentication (PRD requirement, no alternatives)</description>
+      <source>docs/prd.md#User-Account-&-Access</source>
+    </constraint>
+    <constraint>
+      <type>Security</type>
+      <description>Tokens must be stored in-memory only (not localStorage) - Architecture pattern</description>
+      <source>docs/architecture.md#Authentication-Pattern</source>
+    </constraint>
+    <constraint>
+      <type>Protocol</type>
+      <description>Must use OpenID Connect standard (PRD NFR1 requirement)</description>
+      <source>docs/prd.md#Non-Functional-Requirements</source>
+    </constraint>
+    <constraint>
+      <type>Database</type>
+      <description>User records must be created/updated using Prisma Client singleton from lib/prisma/client.ts</description>
+      <source>docs/sprint-artifacts/epic-2-context.md#Data-Models-and-Contracts</source>
+    </constraint>
+    <constraint>
+      <type>API Route</type>
+      <description>OAuth callback handler must be created at app/api/auth/callback/route.ts using Next.js App Router API routes</description>
+      <source>docs/sprint-artifacts/epic-2-context.md#APIs-and-Interfaces</source>
+    </constraint>
+    <constraint>
+      <type>Component Library</type>
+      <description>Login button must use shadcn/ui Button component (from Story 1.1)</description>
+      <source>docs/sprint-artifacts/epic-2-context.md#Project-Structure-Notes</source>
+    </constraint>
+    <constraint>
+      <type>Error Handling</type>
+      <description>Must use standard error response format from Architecture and display user-friendly error messages</description>
+      <source>docs/architecture.md#API-Response-Format</source>
+    </constraint>
+    <constraint>
+      <type>MSAL</type>
+      <description>Must use existing MSAL configuration from lib/auth/msal-browser.ts (getMsalInstance function) - do not recreate</description>
+      <source>docs/sprint-artifacts/2-1-microsoft-entra-external-id-integration-frontend.md#Learnings-from-Previous-Story</source>
+    </constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>MSAL PublicClientApplication</name>
+      <kind>library API</kind>
+      <signature>loginRedirect(loginRequest?: RedirectRequest): Promise&lt;void&gt; | loginPopup(loginRequest?: PopupRequest): Promise&lt;AuthenticationResult&gt;</signature>
+      <path>@azure/msal-react</path>
+    </interface>
+    <interface>
+      <name>Prisma User Model</name>
+      <kind>database model</kind>
+      <signature>User { id: string, externalId: string, email: string, timezone: string, createdAt: DateTime, updatedAt: DateTime }</signature>
+      <path>prisma/schema.prisma</path>
+    </interface>
+    <interface>
+      <name>OAuth Callback API Route</name>
+      <kind>REST endpoint</kind>
+      <signature>POST /api/auth/callback - Handles OAuth callback from Microsoft Entra External ID</signature>
+      <path>app/api/auth/callback/route.ts</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Testing framework: Vitest (configured in Story 1.4). Unit tests should be co-located with source files or in __tests__/unit/ directory. Integration tests should be in __tests__/integration/ directory. Mock MSAL React methods for unit tests. Mock Prisma Client for database operations. Use test database for integration tests. Test coverage should include: login page rendering, MSAL login method invocation, OAuth callback processing, user record creation/lookup, error handling, redirect logic.
+    </standards>
+    <locations>
+      <location>__tests__/unit/auth-frontend.test.tsx</location>
+      <location>__tests__/integration/auth.test.ts</location>
+    </locations>
+    <ideas>
+      <test ac="AC1">
+        <description>Unit test: Verify login page renders correctly with "Sign in with Microsoft" button. Mock MSAL instance and verify loginRedirect/loginPopup is called when button is clicked. Verify redirect to Microsoft Entra ID login page occurs.</description>
+      </test>
+      <test ac="AC1">
+        <description>Integration test: End-to-end login flow. Mock Microsoft Entra ID OAuth flow. Verify OAuth callback handler processes authorization code correctly. Verify user is redirected to dashboard after successful authentication.</description>
+      </test>
+      <test ac="AC2">
+        <description>Unit test: Verify error messages are displayed when authentication fails. Test network errors, Microsoft Entra ID service errors. Verify user can retry login after error.</description>
+      </test>
+      <test ac="AC3">
+        <description>Unit test: Verify authenticated users are automatically redirected to dashboard. Verify login page is not shown when user is already authenticated.</description>
+      </test>
+      <test ac="AC4">
+        <description>Integration test: Verify user record is created in database on first login with correct email and externalId. Mock Prisma Client and verify create operation is called with correct data. Verify user ID is available for subsequent requests.</description>
+      </test>
+      <test ac="AC4">
+        <description>Integration test: Verify user record lookup on subsequent login. Mock existing user in database and verify update operation (if email changed) or no operation (if unchanged).</description>
+      </test>
+      <test ac="AC1">
+        <description>Unit test: Verify MSAL stores tokens in memory (not localStorage). Check that sessionStorage is used (as configured in msal-browser.ts) and localStorage is not accessed.</description>
+      </test>
+    </ideas>
+  </tests>
+</story-context>
+

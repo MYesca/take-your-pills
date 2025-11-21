@@ -45,11 +45,11 @@ development_status:
   epic-1-retrospective: optional
 
   # Epic 2: User Authentication
-  epic-2: backlog
-  2-1-microsoft-entra-external-id-integration-frontend: backlog
-  2-2-authentication-api-routes-and-token-validation: backlog
-  2-3-protected-routes-and-session-management: backlog
-  2-4-logout-functionality: backlog
+  epic-2: contexted
+  2-1-microsoft-entra-external-id-integration-frontend: done
+  2-2-authentication-api-routes-and-token-validation: done
+  2-3-protected-routes-and-session-management: done
+  2-4-logout-functionality: done
   epic-2-retrospective: optional
 
   # Epic 3: Medication Registration & Management

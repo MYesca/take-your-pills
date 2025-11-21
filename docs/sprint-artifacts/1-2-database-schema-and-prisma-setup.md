@@ -84,10 +84,10 @@ So that medication data can be stored and queried efficiently.
 
 - **Database:** External PostgreSQL server (not local SQLite) [Source: docs/architecture.md#Database-Choice]
 - **ORM:** Prisma for type-safe database access [Source: docs/architecture.md#ADR-002]
-- **Primary Keys:** UUID for all models [Source: docs/epic-1-context.md#Data-Models]
+- **Primary Keys:** UUID for all models [Source: docs/sprint-artifacts/epic-1-context.md#Data-Models]
 - **Time Storage:** All dates/times stored in UTC using TIMESTAMP WITH TIME ZONE [Source: docs/architecture.md#Timezone-Handling]
 - **Data Isolation:** All queries must filter by user_id for security [Source: docs/architecture.md#Security-Patterns]
-- **Referential Integrity:** CASCADE deletes for related records [Source: docs/epic-1-context.md#Data-Models]
+- **Referential Integrity:** CASCADE deletes for related records [Source: docs/sprint-artifacts/epic-1-context.md#Data-Models]
 
 ### Source Tree Components
 
@@ -143,7 +143,7 @@ So that medication data can be stored and queried efficiently.
 
 1. **PostgreSQL:** Chosen for robust timezone support and production readiness [Source: docs/architecture.md#ADR-002]
 2. **Prisma ORM:** Provides type safety and migration management [Source: docs/architecture.md#ADR-002]
-3. **UUID Primary Keys:** Better for distributed systems and security [Source: docs/epic-1-context.md#Data-Models]
+3. **UUID Primary Keys:** Better for distributed systems and security [Source: docs/sprint-artifacts/epic-1-context.md#Data-Models]
 4. **UTC Storage:** All times stored in UTC, converted at display layer [Source: docs/architecture.md#Timezone-Handling]
 5. **Singleton Pattern:** Prevents connection pool exhaustion in serverless environments [Source: Prisma best practices]
 
@@ -170,9 +170,9 @@ So that medication data can be stored and queried efficiently.
 ### References
 
 - **Architecture Document:** [Source: docs/architecture.md#Database-Setup]
-- **Epic Context:** [Source: docs/epic-1-context.md#Story-1.2]
+- **Epic Context:** [Source: docs/sprint-artifacts/epic-1-context.md#Story-1.2]
 - **Epic Story Details:** [Source: docs/epics.md#Story-1.2]
-- **Prisma Schema Reference:** [Source: docs/epic-1-context.md#Data-Models-and-Contracts]
+- **Prisma Schema Reference:** [Source: docs/sprint-artifacts/epic-1-context.md#Data-Models-and-Contracts]
 - **Prisma Documentation:** https://www.prisma.io/docs
 - **PostgreSQL Documentation:** https://www.postgresql.org/docs/
 

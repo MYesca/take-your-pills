@@ -1,0 +1,298 @@
+<story-context id="bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>2</epicId>
+    <storyId>2.2</storyId>
+    <title>Authentication API Routes and Token Validation</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-19</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/2-2-authentication-api-routes-and-token-validation.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>system</asA>
+    <iWant>to validate authentication tokens on API requests</iWant>
+    <soThat>only authenticated users can access their medication data</soThat>
+    <tasks>
+      <task id="1" ac="1,2,3">
+        <title>Create Authentication Middleware</title>
+        <subtasks>
+          <subtask>Create `lib/auth/middleware.ts` with `authenticateRequest()` function</subtask>
+          <subtask>Extract Bearer token from Authorization header</subtask>
+          <subtask>Validate token using MSAL Node `acquireTokenOnBehalfOf()` or token validation</subtask>
+          <subtask>Extract user ID from token claims (sub or oid)</subtask>
+          <subtask>Look up user in database by externalId</subtask>
+          <subtask>Create user record if doesn't exist (first login scenario)</subtask>
+          <subtask>Return authenticated user context or null if validation fails</subtask>
+          <subtask>Handle token validation errors gracefully</subtask>
+        </subtasks>
+      </task>
+      <task id="2" ac="1,2">
+        <title>Implement Token Validation with MSAL Node</title>
+        <subtasks>
+          <subtask>Update `lib/auth/msal-node.ts` `validateToken()` function</subtask>
+          <subtask>Use MSAL Node to validate token signature and expiration</subtask>
+          <subtask>Verify token audience and issuer match configuration</subtask>
+          <subtask>Extract claims from validated token</subtask>
+          <subtask>Return user ID (externalId) from token claims</subtask>
+          <subtask>Handle validation errors (expired, invalid signature, wrong audience)</subtask>
+        </subtasks>
+      </task>
+      <task id="3" ac="4">
+        <title>Create /api/auth/me Endpoint</title>
+        <subtasks>
+          <subtask>Create `app/api/auth/me/route.ts` API route</subtask>
+          <subtask>Use authentication middleware to get authenticated user</subtask>
+          <subtask>Return user information (id, email, timezone)</subtask>
+          <subtask>Return 401 if authentication fails</subtask>
+          <subtask>Follow standard API response format from Architecture</subtask>
+        </subtasks>
+      </task>
+      <task id="4" ac="2,3">
+        <title>Implement Error Handling</title>
+        <subtasks>
+          <subtask>Create standard 401 Unauthorized response format</subtask>
+          <subtask>Include clear error messages for different failure scenarios</subtask>
+          <subtask>Log authentication errors (without sensitive data)</subtask>
+          <subtask>Ensure error responses follow Architecture error format</subtask>
+        </subtasks>
+      </task>
+      <task id="5" ac="2,3">
+        <title>Update Frontend to Handle 401 Responses</title>
+        <subtasks>
+          <subtask>Create API client utility or interceptor to catch 401 responses</subtask>
+          <subtask>Redirect to login page when 401 is received</subtask>
+          <subtask>Clear any stored authentication state</subtask>
+          <subtask>Display user-friendly error message if needed</subtask>
+        </subtasks>
+      </task>
+      <task id="6" ac="all">
+        <title>Testing</title>
+        <subtasks>
+          <subtask>Unit test: Token validation with valid token</subtask>
+          <subtask>Unit test: Token validation with expired token</subtask>
+          <subtask>Unit test: Token validation with invalid token</subtask>
+          <subtask>Unit test: Token validation with missing token</subtask>
+          <subtask>Unit test: User record creation on first login via middleware</subtask>
+          <subtask>Integration test: /api/auth/me endpoint with valid token</subtask>
+          <subtask>Integration test: /api/auth/me endpoint with invalid token</subtask>
+          <subtask>Integration test: /api/auth/me endpoint with missing token</subtask>
+          <subtask>Integration test: Frontend 401 handling and redirect</subtask>
+        </subtasks>
+      </task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="AC1">
+      <description>Given a user makes an API request with an Authorization header containing a Bearer token, then: The token is validated using MSAL Node, User ID is extracted from token claims (sub or oid), User record is verified in database (created if first login), Request proceeds with authenticated user context</description>
+    </criterion>
+    <criterion id="AC2">
+      <description>When the token is invalid or expired, then: Request returns 401 Unauthorized, Error response includes clear message, Frontend handles 401 by redirecting to login</description>
+    </criterion>
+    <criterion id="AC3">
+      <description>When no token is provided, then: Request returns 401 Unauthorized, Frontend redirects to login page</description>
+    </criterion>
+    <criterion id="AC4">
+      <description>When I call the `/api/auth/me` endpoint, then: It returns current user information (id, email, timezone), It uses authenticated user context from token, It returns 401 if token is invalid or missing</description>
+    </criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/sprint-artifacts/epic-2-context.md</path>
+        <title>Epic Technical Specification: User Authentication</title>
+        <section>Story 2.2: Backend Token Validation</section>
+        <snippet>Story 2.2 creates authentication middleware, implements token validation using MSAL Node, creates /api/auth/me endpoint, and enforces authentication on protected routes. Middleware validates Bearer tokens, extracts user ID from token claims, and provides authenticated user context for API routes.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/epic-2-context.md</path>
+        <title>Epic Technical Specification: User Authentication</title>
+        <section>APIs and Interfaces - Authentication Middleware Interface</section>
+        <snippet>authenticateRequest(request: NextRequest): Promise&lt;AuthenticatedUser | null&gt; - Extracts Bearer token from Authorization header, validates token using MSAL Node, extracts user ID from token claims, looks up or creates user record in database, returns authenticated user context or null if validation fails.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/epic-2-context.md</path>
+        <title>Epic Technical Specification: User Authentication</title>
+        <section>APIs and Interfaces - GET /api/auth/me</section>
+        <snippet>GET /api/auth/me: Purpose is to get current authenticated user information. Returns user id, email, timezone. Authentication required (Bearer token). Error responses: 401 Unauthorized for invalid or missing token.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>TakeYourPills - Epics and Stories</title>
+        <section>Story 2.2: Authentication API Routes and Token Validation</section>
+        <snippet>User story: As a system, I want to validate authentication tokens on API requests, So that only authenticated users can access their medication data. Technical notes: Create authentication middleware for API routes, use MSAL Node ConfidentialClientApplication for token validation, extract user ID from token claims (sub or oid claim), create user record on first login if doesn't exist. FR Coverage: FR2, FR40, FR41.</snippet>
+      </doc>
+      <doc>
+        <path>docs/prd.md</path>
+        <title>TakeYourPills - Product Requirements Document</title>
+        <section>User Account &amp; Access</section>
+        <snippet>FR2: Users can log in securely and maintain authenticated sessions. FR40: API endpoints require authentication (Bearer token). FR41: All API responses include proper error handling.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>TakeYourPills - Architecture</title>
+        <section>Security Architecture</section>
+        <snippet>Authentication Provider: Microsoft Entra External ID (Azure AD B2C). Protocol: OpenID Connect. Frontend: @azure/msal-react for authentication flow. Backend: @azure/msal-node for token validation. Token Flow: User authenticates via Microsoft Entra External ID, MSAL React receives access token + ID token, Frontend includes access token in API requests: Authorization: Bearer token, Backend API routes validate token using MSAL Node, Backend extracts user ID from token claims, All database queries filter by user ID (data isolation).</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>TakeYourPills - Architecture</title>
+        <section>API Response Format</section>
+        <snippet>Success format: { data: T, meta?: { timestamp: string, requestId: string } }. Error format: { error: { code: string, message: string, details?: { field?: string, [key: string]: any } } }. Use standard error response format for all API routes including 401 Unauthorized responses.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/2-1-microsoft-entra-external-id-integration-frontend.md</path>
+        <title>Story 2.1: Microsoft Entra External ID Integration (Frontend)</title>
+        <section>Learnings from Previous Story</section>
+        <snippet>Story 2.1 established pattern for creating/updating user records using Prisma Client - reuse this pattern in middleware. Story 2.1 extracts user info from ID token claims (sub/oid, email) - use same claims extraction in middleware. Story 2.1 uses standard API response format - follow same format for /api/auth/me.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>takeyourpills/lib/auth/msal-node.ts</path>
+        <kind>service</kind>
+        <symbol>getMsalNodeInstance, validateToken, extractUserIdFromToken</symbol>
+        <lines>1-116</lines>
+        <reason>MSAL Node configuration and instance getter function. Provides ConfidentialClientApplication instance for server-side token validation. validateToken() function has TODO placeholder - this story implements it. Use getMsalNodeInstance() to get MSAL Node instance for token validation in middleware.</reason>
+      </artifact>
+      <artifact>
+        <path>takeyourpills/lib/prisma/client.ts</path>
+        <kind>service</kind>
+        <symbol>prisma</symbol>
+        <lines>1-14</lines>
+        <reason>Prisma Client singleton instance. Use this to query/create user records in database. Already configured with proper logging and singleton pattern. Import and use for database operations in authentication middleware to look up users by externalId.</reason>
+      </artifact>
+      <artifact>
+        <path>takeyourpills/app/api/auth/callback/route.ts</path>
+        <kind>service</kind>
+        <symbol>POST</symbol>
+        <lines>1-50</lines>
+        <reason>OAuth callback handler from Story 2.1. Shows pattern for user record creation/update using Prisma Client. Reuse this pattern in authentication middleware for first-login scenarios. Extracts user info from ID token claims (sub/oid, email).</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <ecosystem name="node">
+        <package name="@azure/msal-node" version="^3.0.22" />
+        <package name="@prisma/client" version="^7.0.0" />
+        <package name="next" version="16.0.3" />
+      </ecosystem>
+      <ecosystem name="node-dev">
+        <package name="vitest" version="^4.0.12" />
+        <package name="@testing-library/react" version="^16.3.0" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <type>Architecture</type>
+      <description>Must use MSAL Node ConfidentialClientApplication for server-side token validation (from Epic 1 Story 1.3)</description>
+      <source>docs/architecture.md#Security-Architecture</source>
+    </constraint>
+    <constraint>
+      <type>Security</type>
+      <description>Token validation must verify signature, expiration, audience, and issuer</description>
+      <source>docs/sprint-artifacts/epic-2-context.md#System-Architecture-Alignment</source>
+    </constraint>
+    <constraint>
+      <type>Database</type>
+      <description>User records must be created/updated using Prisma Client singleton from lib/prisma/client.ts</description>
+      <source>docs/sprint-artifacts/epic-2-context.md#Data-Models-and-Contracts</source>
+    </constraint>
+    <constraint>
+      <type>API Route</type>
+      <description>Authentication middleware must be created at lib/auth/middleware.ts. /api/auth/me endpoint must be at app/api/auth/me/route.ts using Next.js App Router API routes</description>
+      <source>docs/sprint-artifacts/epic-2-context.md#APIs-and-Interfaces</source>
+    </constraint>
+    <constraint>
+      <type>Error Handling</type>
+      <description>Must use standard error response format from Architecture. 401 Unauthorized for authentication failures. Clear error messages without exposing sensitive details.</description>
+      <source>docs/architecture.md#API-Response-Format</source>
+    </constraint>
+    <constraint>
+      <type>MSAL</type>
+      <description>Must use existing MSAL Node configuration from lib/auth/msal-node.ts (getMsalNodeInstance function) - do not recreate. Implement validateToken() function which currently has TODO placeholder.</description>
+      <source>docs/sprint-artifacts/2-2-authentication-api-routes-and-token-validation.md#Learnings-from-Previous-Story</source>
+    </constraint>
+    <constraint>
+      <type>User Record</type>
+      <description>Reuse user record creation pattern from Story 2.1's /api/auth/callback. Look up user by externalId (from token claims). Create user record if doesn't exist (first login via API scenario).</description>
+      <source>docs/sprint-artifacts/2-2-authentication-api-routes-and-token-validation.md#Learnings-from-Previous-Story</source>
+    </constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>Authentication Middleware</name>
+      <kind>function signature</kind>
+      <signature>authenticateRequest(request: NextRequest): Promise&lt;AuthenticatedUser | null&gt;</signature>
+      <path>lib/auth/middleware.ts</path>
+    </interface>
+    <interface>
+      <name>Token Validation</name>
+      <kind>function signature</kind>
+      <signature>validateToken(token: string): Promise&lt;string | null&gt;</signature>
+      <path>lib/auth/msal-node.ts</path>
+    </interface>
+    <interface>
+      <name>GET /api/auth/me</name>
+      <kind>REST endpoint</kind>
+      <signature>GET /api/auth/me - Returns current authenticated user information (id, email, timezone). Requires Bearer token. Returns 401 if invalid or missing.</signature>
+      <path>app/api/auth/me/route.ts</path>
+    </interface>
+    <interface>
+      <name>MSAL Node ConfidentialClientApplication</name>
+      <kind>library API</kind>
+      <signature>getMsalNodeInstance(): ConfidentialClientApplication</signature>
+      <path>lib/auth/msal-node.ts</path>
+    </interface>
+    <interface>
+      <name>Prisma User Model</name>
+      <kind>database model</kind>
+      <signature>User { id: string, externalId: string, email: string, timezone: string, createdAt: DateTime, updatedAt: DateTime }</signature>
+      <path>prisma/schema.prisma</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Testing framework: Vitest (configured in Story 1.4). Unit tests should be in __tests__/unit/ directory. Integration tests should be in __tests__/integration/ directory. Mock MSAL Node for token validation in unit tests. Mock Prisma Client for database operations. Use test database for integration tests. Test coverage should include: token validation (valid, expired, invalid, missing), user record lookup and creation, error handling and 401 responses, frontend 401 handling and redirect.
+    </standards>
+    <locations>
+      <location>__tests__/unit/auth-middleware.test.ts</location>
+      <location>__tests__/integration/auth-api.test.ts</location>
+    </locations>
+    <ideas>
+      <test ac="AC1">
+        <description>Unit test: Verify authenticateRequest() extracts Bearer token from Authorization header. Mock MSAL Node validateToken() to return valid user ID. Mock Prisma Client to return existing user. Verify authenticated user context is returned with correct user ID.</description>
+      </test>
+      <test ac="AC1">
+        <description>Unit test: Verify authenticateRequest() creates user record if doesn't exist (first login scenario). Mock MSAL Node validateToken() to return valid user ID. Mock Prisma Client findUnique() to return null (user doesn't exist). Mock Prisma Client create() to return new user. Verify user record is created with correct externalId and email from token claims.</description>
+      </test>
+      <test ac="AC1">
+        <description>Unit test: Verify validateToken() validates token signature and expiration using MSAL Node. Mock MSAL Node methods to verify token validation logic. Test with valid token, expired token, invalid signature, wrong audience scenarios.</description>
+      </test>
+      <test ac="AC2">
+        <description>Unit test: Verify authenticateRequest() returns null when token is invalid or expired. Mock MSAL Node validateToken() to return null. Verify null is returned (route will handle 401 response).</description>
+      </test>
+      <test ac="AC2">
+        <description>Integration test: Verify /api/auth/me endpoint returns 401 when token is invalid. Send request with invalid Bearer token. Verify response status is 401 and error format follows Architecture standard.</description>
+      </test>
+      <test ac="AC3">
+        <description>Unit test: Verify authenticateRequest() returns null when no token is provided. Call authenticateRequest() with request missing Authorization header. Verify null is returned.</description>
+      </test>
+      <test ac="AC3">
+        <description>Integration test: Verify /api/auth/me endpoint returns 401 when no token is provided. Send request without Authorization header. Verify response status is 401 and error format follows Architecture standard.</description>
+      </test>
+      <test ac="AC4">
+        <description>Integration test: Verify /api/auth/me endpoint returns user information with valid token. Send request with valid Bearer token. Mock authentication middleware to return authenticated user. Verify response contains user id, email, timezone in correct format.</description>
+      </test>
+      <test ac="AC2,AC3">
+        <description>Integration test: Verify frontend handles 401 responses and redirects to login. Mock API client to receive 401 response. Verify redirect to /login page occurs. Verify authentication state is cleared.</description>
+      </test>
+    </ideas>
+  </tests>
+</story-context>
+

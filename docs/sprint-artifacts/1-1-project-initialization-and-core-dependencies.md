@@ -143,7 +143,7 @@ So that I have a solid foundation for building the medication tracking applicati
 ### References
 
 - **Architecture Document:** [Source: docs/architecture.md#Project-Initialization]
-- **Epic Context:** [Source: docs/epic-1-context.md]
+- **Epic Context:** [Source: docs/sprint-artifacts/epic-1-context.md]
 - **Epic Story Details:** [Source: docs/epics.md#Story-1.1]
 - **UX Design System:** [Source: docs/ux-design-specification.md#Design-System-Foundation]
 - **Next.js Documentation:** https://nextjs.org/docs

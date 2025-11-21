@@ -1,0 +1,348 @@
+<story-context id="bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>2</epicId>
+    <storyId>2.4</storyId>
+    <title>Logout Functionality</title>
+    <status>ready-for-dev</status>
+    <generatedAt>2025-11-19</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/2-4-logout-functionality.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>user</asA>
+    <iWant>to log out of the application</iWant>
+    <soThat>I can securely end my session</soThat>
+    <tasks>
+      <task id="1" ac="1">
+        <title>Create Header Component with Logout Button</title>
+        <subtasks>
+          <subtask>Create `components/layout/Header.tsx` component</subtask>
+          <subtask>Add user menu or logout button in header</subtask>
+          <subtask>Display user email or name when authenticated</subtask>
+          <subtask>Add logout button/option in user menu</subtask>
+          <subtask>Style with Tailwind CSS and shadcn/ui components</subtask>
+          <subtask>Make header responsive for mobile devices</subtask>
+          <subtask>Use MSAL React hooks to check authentication state</subtask>
+          <subtask>Show logout button only when authenticated</subtask>
+        </subtasks>
+      </task>
+      <task id="2" ac="1,2">
+        <title>Implement Logout Functionality</title>
+        <subtasks>
+          <subtask>Create logout handler function using MSAL `logoutRedirect()`</subtask>
+          <subtask>Call `instance.logoutRedirect()` from MSAL instance</subtask>
+          <subtask>MSAL automatically clears tokens from memory and sessionStorage</subtask>
+          <subtask>MSAL automatically redirects to login page after logout</subtask>
+          <subtask>Handle logout errors gracefully with try/catch</subtask>
+          <subtask>Clear any application state if needed (React state, context)</subtask>
+          <subtask>Ensure no sensitive data remains in browser storage</subtask>
+        </subtasks>
+      </task>
+      <task id="3" ac="1">
+        <title>Integrate Header into Layout</title>
+        <subtasks>
+          <subtask>Add Header component to root layout (`app/layout.tsx`)</subtask>
+          <subtask>Ensure header is visible on all protected pages</subtask>
+          <subtask>Hide header on login page (or show minimal version)</subtask>
+          <subtask>Test header visibility across different pages</subtask>
+          <subtask>Ensure header works with ProtectedRoute component</subtask>
+        </subtasks>
+      </task>
+      <task id="4" ac="2">
+        <title>Verify Session Cleanup</title>
+        <subtasks>
+          <subtask>Verify MSAL clears tokens from memory automatically</subtask>
+          <subtask>Verify sessionStorage is cleared (MSAL handles this)</subtask>
+          <subtask>Verify no sensitive data remains in browser storage</subtask>
+          <subtask>Test that API requests fail after logout (401 responses)</subtask>
+          <subtask>Verify API client handles 401 and redirects to login</subtask>
+        </subtasks>
+      </task>
+      <task id="5" ac="3">
+        <title>Test Protected Route Access After Logout</title>
+        <subtasks>
+          <subtask>Test that protected routes redirect to login after logout</subtask>
+          <subtask>Test that ProtectedRoute component detects unauthenticated state</subtask>
+          <subtask>Test that user can log in again after logout</subtask>
+          <subtask>Verify session is completely cleared between logins</subtask>
+          <subtask>Test that SessionProvider detects logout state change</subtask>
+        </subtasks>
+      </task>
+      <task id="6" ac="All">
+        <title>Testing</title>
+        <subtasks>
+          <subtask>Unit test: Logout button triggers logout function</subtask>
+          <subtask>Unit test: Logout clears MSAL session</subtask>
+          <subtask>Unit test: Logout redirects to login page</subtask>
+          <subtask>Integration test: Protected routes inaccessible after logout</subtask>
+          <subtask>Integration test: User can log in again after logout</subtask>
+          <subtask>Integration test: No data leakage between sessions</subtask>
+          <subtask>Test logout button visibility (only when authenticated)</subtask>
+        </subtasks>
+      </task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="1">
+      <given>I am logged in</given>
+      <when>I click the logout button (in header/user menu)</when>
+      <then>
+        <assertion>I am logged out of the application</assertion>
+        <assertion>My session is ended</assertion>
+        <assertion>I am redirected to the login page</assertion>
+        <assertion>I cannot access protected routes without logging in again</assertion>
+      </then>
+    </criterion>
+    <criterion id="2">
+      <given>I am logged in</given>
+      <when>I log out</when>
+      <then>
+        <assertion>MSAL clears the token from memory</assertion>
+        <assertion>All user session data is cleared</assertion>
+        <assertion>No sensitive data remains in browser storage</assertion>
+        <assertion>I cannot make authenticated API requests after logout</assertion>
+      </then>
+    </criterion>
+    <criterion id="3">
+      <given>I have logged out</given>
+      <when>I try to access a protected route</when>
+      <then>
+        <assertion>I am automatically redirected to the login page</assertion>
+        <assertion>I see the login page content</assertion>
+        <assertion>I can log in again to continue</assertion>
+      </then>
+    </criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/sprint-artifacts/epic-2-context.md</path>
+        <title>Epic Technical Specification: User Authentication</title>
+        <section>Story 2.4: Logout Functionality</section>
+        <snippet>Story 2.4 implements logout functionality using MSAL logoutRedirect() method. Adds logout button to Header component, clears session data automatically via MSAL, and redirects to login page. MSAL handles all token cleanup automatically.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/epic-2-context.md</path>
+        <title>Epic Technical Specification: User Authentication</title>
+        <section>Story 2.4 Implementation Steps</section>
+        <snippet>1. Add logout button to Header component. 2. Implement logout handler using MSAL logoutRedirect(). 3. Clear session data (MSAL handles automatically). 4. Redirect to login page. 5. Verify logout works correctly.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>TakeYourPills - Epics and Stories</title>
+        <section>Story 2.4: Logout Functionality</section>
+        <snippet>User story: As a user, I want to log out of the application, So that I can securely end my session. Technical notes: Use MSAL logoutRedirect or logoutPopup method, clear any application state on logout, redirect to login page after logout, ensure no data leakage between sessions. FR Coverage: FR3.</snippet>
+      </doc>
+      <doc>
+        <path>docs/prd.md</path>
+        <title>TakeYourPills - Product Requirements Document</title>
+        <section>User Account &amp; Access</section>
+        <snippet>FR3: Users can log out securely and end their session.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>TakeYourPills - Architecture</title>
+        <section>Security Architecture</section>
+        <snippet>Authentication Provider: Microsoft Entra External ID (Azure AD B2C). Protocol: OpenID Connect. Frontend: @azure/msal-react for authentication flow. MSAL handles token storage in-memory and automatic token refresh. Session timeout: Token expiration (configurable).</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>TakeYourPills - Architecture</title>
+        <section>Session Management</section>
+        <snippet>Tokens stored in-memory by MSAL (not localStorage). Automatic token refresh handled by MSAL. Session timeout: Token expiration (configurable). MSAL handles all session management automatically.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/2-3-protected-routes-and-session-management.md</path>
+        <title>Story 2.3: Protected Routes and Session Management</title>
+        <section>Learnings from Previous Stories</section>
+        <snippet>ProtectedRoute component will automatically redirect to login after logout. SessionProvider monitors session state and will detect logout. MSAL handles token storage in-memory - logout clears everything automatically. Login page supports redirect parameter.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>takeyourpills/lib/auth/msal-browser.ts</path>
+        <kind>service</kind>
+        <symbol>getMsalInstance</symbol>
+        <lines>1-70</lines>
+        <reason>MSAL Browser configuration and instance getter. Provides PublicClientApplication instance for client-side authentication. Use getMsalInstance() to get MSAL instance for logout operations. MSAL instance has logoutRedirect() method for logout.</reason>
+      </artifact>
+      <artifact>
+        <path>takeyourpills/components/providers/MsalProvider.tsx</path>
+        <kind>component</kind>
+        <symbol>MsalProviderWrapper</symbol>
+        <lines>1-54</lines>
+        <reason>MSAL React provider wrapper. Wraps application with MsalProvider to enable MSAL React hooks (useMsal, useIsAuthenticated). Header component should use these hooks to check authentication state and access MSAL instance for logout.</reason>
+      </artifact>
+      <artifact>
+        <path>takeyourpills/components/auth/ProtectedRoute.tsx</path>
+        <kind>component</kind>
+        <symbol>ProtectedRoute</symbol>
+        <lines>1-60</lines>
+        <reason>Protected route wrapper component from Story 2.3. Automatically redirects to login when user is not authenticated. After logout, this component will detect unauthenticated state and redirect to login page. No changes needed for this story.</reason>
+      </artifact>
+      <artifact>
+        <path>takeyourpills/components/auth/SessionProvider.tsx</path>
+        <kind>component</kind>
+        <symbol>SessionProvider</symbol>
+        <lines>1-60</lines>
+        <reason>Session monitoring component from Story 2.3. Monitors authentication state across the app. Will detect when user logs out and handle redirect if needed. No changes needed for this story.</reason>
+      </artifact>
+      <artifact>
+        <path>takeyourpills/app/(auth)/login/page.tsx</path>
+        <kind>page</kind>
+        <symbol>LoginPage</symbol>
+        <lines>1-15</lines>
+        <reason>Login page from Story 2.1. Users are redirected here after logout. Login page supports redirect parameter for preserving intended destination. No changes needed for this story.</reason>
+      </artifact>
+      <artifact>
+        <path>takeyourpills/lib/api/client.ts</path>
+        <kind>service</kind>
+        <symbol>useApiClient</symbol>
+        <lines>1-197</lines>
+        <reason>API client hook from Story 2.2. Automatically handles 401 responses and redirects to login. After logout, API requests will fail with 401, and this client will handle the redirect. No changes needed for this story.</reason>
+      </artifact>
+      <artifact>
+        <path>takeyourpills/app/layout.tsx</path>
+        <kind>layout</kind>
+        <symbol>RootLayout</symbol>
+        <lines>1-40</lines>
+        <reason>Root layout component. Currently includes MsalProviderWrapper and SessionProvider. Should add Header component here to make it visible on all pages. Header should be inside MsalProviderWrapper to access MSAL hooks.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <ecosystem name="node">
+        <package name="@azure/msal-react" version="^3.0.0" />
+        <package name="@azure/msal-browser" version="^3.0.0" />
+        <package name="next" version="16.0.3" />
+        <package name="react" version="^19.0.0" />
+      </ecosystem>
+      <ecosystem name="node-dev">
+        <package name="vitest" version="^4.0.12" />
+        <package name="@testing-library/react" version="^16.3.0" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <type>Architecture</type>
+      <description>Must use MSAL React hooks (useMsal, useIsAuthenticated) for authentication state (from Story 2.1)</description>
+      <source>docs/architecture.md#Authentication-Pattern</source>
+    </constraint>
+    <constraint>
+      <type>Security</type>
+      <description>MSAL automatically clears tokens and session data on logout - no manual cleanup needed</description>
+      <source>docs/sprint-artifacts/epic-2-context.md#Story-2.4</source>
+    </constraint>
+    <constraint>
+      <type>UI</type>
+      <description>Must use shadcn/ui components for consistent styling (Button, DropdownMenu, etc.)</description>
+      <source>docs/architecture.md#UI-Framework</source>
+    </constraint>
+    <constraint>
+      <type>UX</type>
+      <description>Use logoutRedirect() instead of logoutPopup() for better UX (no popup blocker issues)</description>
+      <source>docs/sprint-artifacts/2-4-logout-functionality.md#Architecture-Patterns</source>
+    </constraint>
+    <constraint>
+      <type>Component</type>
+      <description>Header component must be a client component ('use client') to use MSAL React hooks</description>
+      <source>docs/architecture.md#Component-Patterns</source>
+    </constraint>
+    <constraint>
+      <type>Routing</type>
+      <description>ProtectedRoute component from Story 2.3 will automatically handle redirect after logout</description>
+      <source>docs/sprint-artifacts/2-3-protected-routes-and-session-management.md</source>
+    </constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>MSAL Instance - logoutRedirect()</name>
+      <purpose>Logout user and clear session</purpose>
+      <signature>instance.logoutRedirect(logoutRequest?: LogoutRequest): Promise&lt;void&gt;</signature>
+      <description>MSAL method that logs out the user, clears all tokens from memory and sessionStorage, and redirects to login page. Automatically handles all session cleanup.</description>
+      <source>@azure/msal-browser PublicClientApplication</source>
+      <usage>Call from logout handler in Header component. Use MSAL instance from useMsal() hook.</usage>
+    </interface>
+    <interface>
+      <name>useMsal() Hook</name>
+      <purpose>Access MSAL instance and accounts</purpose>
+      <signature>const { instance, accounts, inProgress } = useMsal()</signature>
+      <description>MSAL React hook that provides access to MSAL instance, user accounts, and interaction status. Use instance for logout operations.</description>
+      <source>@azure/msal-react</source>
+      <usage>Use in Header component to access MSAL instance for logout and check authentication state.</usage>
+    </interface>
+    <interface>
+      <name>useIsAuthenticated() Hook</name>
+      <purpose>Check if user is authenticated</purpose>
+      <signature>const isAuthenticated = useIsAuthenticated()</signature>
+      <description>MSAL React hook that returns boolean indicating if user is authenticated. Use to conditionally show/hide logout button.</description>
+      <source>@azure/msal-react</source>
+      <usage>Use in Header component to determine if logout button should be visible.</usage>
+    </interface>
+    <interface>
+      <name>ProtectedRoute Component</name>
+      <purpose>Protect routes and redirect unauthenticated users</purpose>
+      <signature>&lt;ProtectedRoute&gt;{children}&lt;/ProtectedRoute&gt;</signature>
+      <description>Component wrapper that checks authentication and redirects to login if not authenticated. Already implemented in Story 2.3.</description>
+      <source>components/auth/ProtectedRoute.tsx</source>
+      <usage>No changes needed. After logout, this component will automatically redirect to login when user tries to access protected routes.</usage>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      <standard>Unit tests use Vitest framework with React Testing Library</standard>
+      <standard>Mock MSAL React hooks (useMsal, useIsAuthenticated) for component tests</standard>
+      <standard>Integration tests verify end-to-end logout flow</standard>
+      <standard>Test session cleanup and data isolation between sessions</standard>
+      <standard>All tests must pass before story is marked complete</standard>
+    </standards>
+    <locations>
+      <location>__tests__/unit/auth-logout.test.tsx</location>
+      <location>__tests__/integration/logout.test.ts</location>
+    </locations>
+    <ideas>
+      <test>
+        <title>Logout button renders when authenticated</title>
+        <type>unit</type>
+        <description>Test that logout button is visible when user is authenticated, hidden when not authenticated</description>
+      </test>
+      <test>
+        <title>Logout button click triggers logout</title>
+        <type>unit</type>
+        <description>Test that clicking logout button calls MSAL logoutRedirect() method</description>
+      </test>
+      <test>
+        <title>Logout clears MSAL session</title>
+        <type>unit</type>
+        <description>Test that after logout, MSAL accounts array is empty and isAuthenticated is false</description>
+      </test>
+      <test>
+        <title>Protected routes redirect after logout</title>
+        <type>integration</type>
+        <description>Test that accessing protected route after logout redirects to login page</description>
+      </test>
+      <test>
+        <title>User can log in again after logout</title>
+        <type>integration</type>
+        <description>Test that user can successfully log in again after logging out</description>
+      </test>
+      <test>
+        <title>No data leakage between sessions</title>
+        <type>integration</type>
+        <description>Test that no user data from previous session is accessible after logout and new login</description>
+      </test>
+      <test>
+        <title>API requests fail after logout</title>
+        <type>integration</type>
+        <description>Test that API requests return 401 after logout and redirect to login</description>
+      </test>
+    </ideas>
+  </tests>
+</story-context>
+

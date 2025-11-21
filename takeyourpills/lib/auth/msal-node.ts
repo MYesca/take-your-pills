@@ -56,31 +56,72 @@ export function getMsalNodeInstance(): ConfidentialClientApplication {
 }
 
 /**
- * Token Validation Utility (Basic Structure)
+ * Token Validation Utility
  * 
- * This is a basic structure for token validation.
- * Full implementation will be completed in Epic 2 (Story 2.2).
+ * Validates JWT tokens from Microsoft Entra External ID.
+ * Verifies token signature, expiration, audience, and issuer.
  * 
  * @param token - The access token to validate
- * @returns User ID extracted from token claims, or null if invalid
+ * @returns Token claims if valid, null if invalid
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export async function validateToken(_token: string): Promise<string | null> {
+export interface TokenClaims {
+  sub?: string;
+  oid?: string;
+  email?: string;
+  aud?: string;
+  iss?: string;
+  exp?: number;
+  iat?: number;
+  [key: string]: unknown;
+}
+
+export async function validateToken(token: string): Promise<TokenClaims | null> {
   try {
-    // TODO: Implement full token validation in Epic 2, Story 2.2
-    // This will include:
-    // 1. Verify token signature
-    // 2. Check token expiration
-    // 3. Validate token audience and issuer
-    // 4. Extract user ID from token claims (oid or sub claim)
+    if (!token) {
+      return null;
+    }
+
+    const { jwtVerify, createRemoteJWKSet } = await import('jose');
     
-    // const msalNode = getMsalNodeInstance();
+    // Get authority URL for JWKS endpoint
+    const authority = msalNodeConfig.auth.authority;
+    const tenantId = process.env.AZURE_TENANT_ID || '';
+    const clientId = process.env.AZURE_CLIENT_ID || '';
     
-    // Basic structure - full implementation in Epic 2
-    // For now, return null to indicate validation is not yet implemented
-    return null;
+    if (!authority || !tenantId || !clientId) {
+      console.error('MSAL configuration missing required environment variables');
+      return null;
+    }
+
+    // Construct JWKS URI for Microsoft Entra External ID
+    // For CIAM, the JWKS endpoint is typically at: {authority}/discovery/v2.0/keys
+    const jwksUri = `${authority}/discovery/v2.0/keys`;
+    
+    // Create JWKS remote set for signature verification
+    const JWKS = createRemoteJWKSet(new URL(jwksUri));
+
+    // Verify token signature and decode claims
+    const { payload } = await jwtVerify(token, JWKS, {
+      issuer: authority,
+      audience: clientId, // Token audience should match client ID
+    });
+
+    // Check token expiration
+    const now = Math.floor(Date.now() / 1000);
+    if (payload.exp && payload.exp < now) {
+      console.error('Token has expired');
+      return null;
+    }
+
+    // Return token claims
+    return payload as TokenClaims;
   } catch (error) {
-    console.error('Token validation error:', error);
+    // Log error without sensitive data
+    if (error instanceof Error) {
+      console.error('Token validation error:', error.message);
+    } else {
+      console.error('Token validation error: Unknown error');
+    }
     return null;
   }
 }
@@ -88,23 +129,20 @@ export async function validateToken(_token: string): Promise<string | null> {
 /**
  * Extract User ID from Token Claims
  * 
- * Helper function to extract user ID from validated token.
- * Full implementation will be in Epic 2.
+ * Extracts the user's external ID from validated token claims.
+ * Uses 'oid' (object ID) or 'sub' (subject) claim.
  * 
- * @param token - The validated access token
+ * @param claims - The validated token claims
  * @returns User ID (external ID from Microsoft Entra) or null
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function extractUserIdFromToken(_token: string): string | null {
-  try {
-    // TODO: Implement in Epic 2, Story 2.2
-    // Extract 'oid' or 'sub' claim from token
-    // This is the user's external ID from Microsoft Entra
-    return null;
-  } catch (error) {
-    console.error('Error extracting user ID from token:', error);
+export function extractUserIdFromClaims(claims: TokenClaims | null): string | null {
+  if (!claims) {
     return null;
   }
+
+  // Prefer 'oid' (object ID) over 'sub' (subject) for Microsoft Entra
+  // 'oid' is the immutable user identifier
+  return claims.oid || claims.sub || null;
 }
 
 /**

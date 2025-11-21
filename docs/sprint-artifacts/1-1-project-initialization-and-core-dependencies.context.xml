@@ -129,13 +129,13 @@
         <snippet>Project structure includes: app/ directory for Next.js App Router routes, components/ for reusable UI components, lib/ for utilities, prisma/ for database schema, __tests__/ for test files. File naming conventions: kebab-case for files/folders, PascalCase for components.</snippet>
       </doc>
       <doc>
-        <path>docs/epic-1-context.md</path>
+        <path>docs/sprint-artifacts/epic-1-context.md</path>
         <title>Epic Technical Specification: Foundation & Project Setup</title>
         <section>Story 1.1 Implementation Steps</section>
         <snippet>Step-by-step implementation guide: 1) Initialize Next.js project with create-next-app command, 2) Install core dependencies (Prisma, MSAL, CRON, date utils, Zod, React Query), 3) Install dev dependencies (types, Vitest, Playwright), 4) Initialize shadcn/ui, 5) Create .env.example, 6) Verify development server starts.</snippet>
       </doc>
       <doc>
-        <path>docs/epic-1-context.md</path>
+        <path>docs/sprint-artifacts/epic-1-context.md</path>
         <title>Epic Technical Specification: Foundation & Project Setup</title>
         <section>Dependencies and Integrations</section>
         <snippet>Core dependencies listed with versions: Next.js 15, React 18, TypeScript 5, Tailwind CSS 3, shadcn/ui, Prisma, MSAL libraries, cron-parser, node-cron, date-fns, date-fns-tz, Zod, React Query. Development dependencies: Vitest, React Testing Library, Playwright, ESLint, TypeScript types.</snippet>
