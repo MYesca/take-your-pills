@@ -1,6 +1,6 @@
 # Story 1.1: Project Initialization and Core Dependencies
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -32,57 +32,57 @@ So that I have a solid foundation for building the medication tracking applicati
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Initialize Next.js Project** (AC: #1)
-  - [ ] Run `npx create-next-app@latest takeyourpills --typescript --tailwind --app --no-src-dir`
-  - [ ] Verify project structure matches architecture specification
-  - [ ] Verify `tsconfig.json` exists and TypeScript is configured
-  - [ ] Verify `tailwind.config.ts` exists and Tailwind CSS is configured
-  - [ ] Verify `package.json` exists with Next.js 15 dependency
-  - [ ] Verify `.gitignore` exists with appropriate exclusions
+- [X] **Task 1: Initialize Next.js Project** (AC: #1)
+  - [X] Run `npx create-next-app@latest takeyourpills --typescript --tailwind --app --no-src-dir`
+  - [X] Verify project structure matches architecture specification
+  - [X] Verify `tsconfig.json` exists and TypeScript is configured
+  - [X] Verify `tailwind.config.ts` exists and Tailwind CSS is configured
+  - [X] Verify `package.json` exists with Next.js 15 dependency
+  - [X] Verify `.gitignore` exists with appropriate exclusions
 
-- [ ] **Task 2: Install Core Dependencies** (AC: #2)
-  - [ ] Install Prisma packages: `npm install @prisma/client prisma`
-  - [ ] Install MSAL packages: `npm install @azure/msal-react @azure/msal-node`
-  - [ ] Install CRON packages: `npm install cron-parser node-cron`
-  - [ ] Install date utilities: `npm install date-fns date-fns-tz`
-  - [ ] Install validation: `npm install zod`
-  - [ ] Install data fetching: `npm install @tanstack/react-query`
-  - [ ] Verify all packages are listed in `package.json` dependencies
+- [X] **Task 2: Install Core Dependencies** (AC: #2)
+  - [X] Install Prisma packages: `npm install @prisma/client prisma`
+  - [X] Install MSAL packages: `npm install @azure/msal-react @azure/msal-node`
+  - [X] Install CRON packages: `npm install cron-parser node-cron`
+  - [X] Install date utilities: `npm install date-fns date-fns-tz`
+  - [X] Install validation: `npm install zod`
+  - [X] Install data fetching: `npm install @tanstack/react-query`
+  - [X] Verify all packages are listed in `package.json` dependencies
 
-- [ ] **Task 3: Install Development Dependencies** (AC: #2)
-  - [ ] Install TypeScript types: `npm install -D @types/node-cron`
-  - [ ] Install testing framework: `npm install -D vitest @testing-library/react @testing-library/jest-dom`
-  - [ ] Install E2E testing: `npm install -D @playwright/test`
-  - [ ] Verify all dev packages are listed in `package.json` devDependencies
+- [X] **Task 3: Install Development Dependencies** (AC: #2)
+  - [X] Install TypeScript types: `npm install -D @types/node-cron`
+  - [X] Install testing framework: `npm install -D vitest @testing-library/react @testing-library/jest-dom`
+  - [X] Install E2E testing: `npm install -D @playwright/test`
+  - [X] Verify all dev packages are listed in `package.json` devDependencies
 
-- [ ] **Task 4: Initialize shadcn/ui** (AC: #3)
-  - [ ] Run `npx shadcn-ui@latest init`
-  - [ ] Configure shadcn/ui with Tailwind CSS integration (follow prompts)
-  - [ ] Verify `components.json` is created
-  - [ ] Verify shadcn/ui configuration is correct
+- [X] **Task 4: Initialize shadcn/ui** (AC: #3)
+  - [X] Run `npx shadcn-ui@latest init`
+  - [X] Configure shadcn/ui with Tailwind CSS integration (follow prompts)
+  - [X] Verify `components.json` is created
+  - [X] Verify shadcn/ui configuration is correct
 
-- [ ] **Task 5: Create Environment Variable Template** (AC: #5)
-  - [ ] Create `.env.example` file in project root
-  - [ ] Document DATABASE_URL with format example
-  - [ ] Document AZURE_CLIENT_ID placeholder
-  - [ ] Document AZURE_CLIENT_SECRET placeholder
-  - [ ] Document AZURE_TENANT_ID placeholder
-  - [ ] Document AZURE_REDIRECT_URI placeholder
-  - [ ] Add descriptive comments for each variable
+- [X] **Task 5: Create Environment Variable Template** (AC: #5)
+  - [X] Create `.env.example` file in project root
+  - [X] Document DATABASE_URL with format example
+  - [X] Document AZURE_CLIENT_ID placeholder
+  - [X] Document AZURE_CLIENT_SECRET placeholder
+  - [X] Document AZURE_TENANT_ID placeholder
+  - [X] Document AZURE_REDIRECT_URI placeholder
+  - [X] Add descriptive comments for each variable
 
-- [ ] **Task 6: Verify Development Server** (AC: #4)
-  - [ ] Run `npm run dev` command
-  - [ ] Verify development server starts without errors
-  - [ ] Verify server is accessible at http://localhost:3000 (or configured port)
-  - [ ] Verify no TypeScript errors in console
-  - [ ] Verify Tailwind CSS is working (check for styling)
+- [X] **Task 6: Verify Development Server** (AC: #4)
+  - [X] Run `npm run dev` command
+  - [X] Verify development server starts without errors
+  - [X] Verify server is accessible at http://localhost:3000 (or configured port)
+  - [X] Verify no TypeScript errors in console
+  - [X] Verify Tailwind CSS is working (check for styling)
 
-- [ ] **Task 7: Update .gitignore** (AC: #1)
-  - [ ] Ensure `.gitignore` includes `node_modules`
-  - [ ] Ensure `.gitignore` includes `.env.local`
-  - [ ] Ensure `.gitignore` includes `.next`
-  - [ ] Ensure `.gitignore` includes other Next.js standard exclusions
-  - [ ] Verify sensitive files will not be committed
+- [X] **Task 7: Update .gitignore** (AC: #1)
+  - [X] Ensure `.gitignore` includes `node_modules`
+  - [X] Ensure `.gitignore` includes `.env.local`
+  - [X] Ensure `.gitignore` includes `.next`
+  - [X] Ensure `.gitignore` includes other Next.js standard exclusions
+  - [X] Verify sensitive files will not be committed
 
 ## Dev Notes
 
