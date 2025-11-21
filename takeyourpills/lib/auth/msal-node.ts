@@ -64,7 +64,8 @@ export function getMsalNodeInstance(): ConfidentialClientApplication {
  * @param token - The access token to validate
  * @returns User ID extracted from token claims, or null if invalid
  */
-export async function validateToken(token: string): Promise<string | null> {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function validateToken(_token: string): Promise<string | null> {
   try {
     // TODO: Implement full token validation in Epic 2, Story 2.2
     // This will include:
@@ -73,7 +74,7 @@ export async function validateToken(token: string): Promise<string | null> {
     // 3. Validate token audience and issuer
     // 4. Extract user ID from token claims (oid or sub claim)
     
-    const msalNode = getMsalNodeInstance();
+    // const msalNode = getMsalNodeInstance();
     
     // Basic structure - full implementation in Epic 2
     // For now, return null to indicate validation is not yet implemented
@@ -93,7 +94,8 @@ export async function validateToken(token: string): Promise<string | null> {
  * @param token - The validated access token
  * @returns User ID (external ID from Microsoft Entra) or null
  */
-export function extractUserIdFromToken(token: string): string | null {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function extractUserIdFromToken(_token: string): string | null {
   try {
     // TODO: Implement in Epic 2, Story 2.2
     // Extract 'oid' or 'sub' claim from token

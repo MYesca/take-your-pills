@@ -41,4 +41,18 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# testing
+/coverage
+.nyc_output
+
+# prisma
 /lib/generated/prisma
+*.db
+*.db-journal
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~

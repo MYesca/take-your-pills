@@ -32,6 +32,8 @@ export function MsalProviderWrapper({ children }: MsalProviderWrapperProps) {
     if (typeof window !== 'undefined') {
       try {
         const instance = getMsalInstance();
+        // Necessary for initializing MSAL - intentionally synchronous initialization
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setMsalInstance(instance);
       } catch (error) {
         console.error('Failed to initialize MSAL:', error);

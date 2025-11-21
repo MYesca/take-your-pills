@@ -74,6 +74,8 @@ export default function TestMsalPage() {
       instanceCreated = false;
     }
 
+    // Test utility page - intentional synchronous state updates for configuration display
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setConfigStatus({
       clientId,
       tenantId,
