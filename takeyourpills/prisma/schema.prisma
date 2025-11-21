@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id          String    @id @default(uuid())
+  externalId  String    @unique @map("external_id") @db.VarChar(255)
+  email       String    @db.VarChar(255)
+  timezone    String    @default("UTC") @db.VarChar(50)
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  
+  medications          Medication[]
+  consumptionHistory   ConsumptionHistory[]
+  
+  @@map("users")
+  @@index([externalId])
+}
+
+model Medication {
+  id            String    @id @default(uuid())
+  userId        String    @map("user_id")
+  name          String    @db.VarChar(255)
+  cronExpression String   @map("cron_expression") @db.VarChar(255)
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  
+  user              User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  consumptionHistory ConsumptionHistory[]
+  
+  @@unique([userId, name])
+  @@map("medications")
+  @@index([userId])
+  @@index([userId, createdAt])
+}
+
+model ConsumptionHistory {
+  id            String    @id @default(uuid())
+  medicationId  String    @map("medication_id")
+  userId        String    @map("user_id")
+  scheduledTime DateTime  @map("scheduled_time")  // UTC
+  consumedAt    DateTime  @map("consumed_at")      // UTC
+  createdAt     DateTime  @default(now()) @map("created_at")
+  
+  medication  Medication @relation(fields: [medicationId], references: [id], onDelete: Cascade)
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([medicationId, scheduledTime])
+  @@map("consumption_history")
+  @@index([userId])
+  @@index([medicationId])
+  @@index([scheduledTime])
+  @@index([userId, scheduledTime])
+}
