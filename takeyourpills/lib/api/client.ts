@@ -135,15 +135,20 @@ export function useApiClient() {
     }
 
     // Make request
-    const response = await fetch(url, {
+    const requestInit: RequestInit = {
       method,
       headers: {
         'Content-Type': 'application/json',
-        ...(authHeader && { Authorization: authHeader }),
+        ...(authHeader ? { Authorization: authHeader } : {}),
         ...headers,
       },
-      ...(body && { body: JSON.stringify(body) }),
-    });
+    };
+
+    if (body) {
+      requestInit.body = JSON.stringify(body);
+    }
+
+    const response = await fetch(url, requestInit);
 
     // Handle 401 Unauthorized
     if (response.status === 401) {
