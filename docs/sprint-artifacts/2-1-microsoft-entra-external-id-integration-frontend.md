@@ -1,6 +1,6 @@
 # Story 2.1: Microsoft Entra External ID Integration (Frontend)
 
-Status: review
+Status: done
 
 ## Story
 

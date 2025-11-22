@@ -1,6 +1,6 @@
 # Story 2.2: Authentication API Routes and Token Validation
 
-Status: review
+Status: done
 
 ## Story
 

@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>1.3</storyId>
+    <title>Authentication Infrastructure (MSAL Configuration)</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-19</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-3-authentication-infrastructure-msal-configuration.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>developer</asA>
+    <iWant>MSAL (Microsoft Authentication Library) configured for frontend and backend</iWant>
+    <soThat>users can authenticate with Microsoft Entra External ID</soThat>
+    <tasks>
+      <task id="1" ac="1">
+        <title>Configure MSAL React</title>
+        <subtasks>
+          <subtask>Create `lib/auth/msal.ts` file</subtask>
+          <subtask>Configure PublicClientApplication with Azure credentials from environment variables</subtask>
+          <subtask>Set up MSAL configuration object with client ID, tenant ID, redirect URI</subtask>
+          <subtask>Export MSAL instance and configuration for use in components</subtask>
+          <subtask>Verify MSAL React instance can be created with valid config</subtask>
+          <subtask>Add TypeScript types for MSAL configuration</subtask>
+        </subtasks>
+      </task>
+      <task id="2" ac="2">
+        <title>Configure MSAL Node</title>
+        <subtasks>
+          <subtask>Add ConfidentialClientApplication configuration for backend in `lib/auth/msal.ts`</subtask>
+          <subtask>Create basic token validation utility structure (full implementation in Epic 2)</subtask>
+          <subtask>Implement user ID extraction from token claims (sub or oid claim)</subtask>
+          <subtask>Export MSAL Node utilities for use in API routes</subtask>
+          <subtask>Verify MSAL Node instance can be created with valid config</subtask>
+          <subtask>Document token validation usage pattern</subtask>
+        </subtasks>
+      </task>
+      <task id="3" ac="3">
+        <title>Set Up Environment Variables</title>
+        <subtasks>
+          <subtask>Add AZURE_CLIENT_ID to `.env.local` (not committed)</subtask>
+          <subtask>Add AZURE_CLIENT_SECRET to `.env.local` (not committed)</subtask>
+          <subtask>Add AZURE_TENANT_ID to `.env.local` (not committed)</subtask>
+          <subtask>Add AZURE_REDIRECT_URI to `.env.local` (not committed)</subtask>
+          <subtask>Update `.env.example` to document all Azure environment variables (without values)</subtask>
+          <subtask>Add descriptive comments for each variable in `.env.example`</subtask>
+          <subtask>Verify environment variables load correctly in MSAL configuration</subtask>
+        </subtasks>
+      </task>
+      <task id="4" ac="4">
+        <title>Create MSAL Provider Wrapper</title>
+        <subtasks>
+          <subtask>Update `app/layout.tsx` to import MSAL provider component</subtask>
+          <subtask>Wrap application with MSAL provider component</subtask>
+          <subtask>Configure provider with MSAL instance from `lib/auth/msal.ts`</subtask>
+          <subtask>Verify provider handles authentication state correctly</subtask>
+          <subtask>Test that provider doesn't break application rendering</subtask>
+        </subtasks>
+      </task>
+      <task id="5" ac="5">
+        <title>Verify Configuration</title>
+        <subtasks>
+          <subtask>Verify MSAL React instance can be created without errors</subtask>
+          <subtask>Verify MSAL Node instance can be created without errors</subtask>
+          <subtask>Verify environment variables are accessible in configuration</subtask>
+          <subtask>Verify MSAL provider wraps application without errors</subtask>
+          <subtask>Document MSAL setup completion</subtask>
+        </subtasks>
+      </task>
+      <task id="6" ac="1,2,4">
+        <title>Testing</title>
+        <subtasks>
+          <subtask>Create unit test: Verify MSAL React instance creation with valid config</subtask>
+          <subtask>Create unit test: Verify MSAL Node instance creation with valid config</subtask>
+          <subtask>Create unit test: Verify environment variables are loaded correctly</subtask>
+          <subtask>Create integration test: Verify MSAL provider wraps app correctly (optional, deferred to Epic 2)</subtask>
+        </subtasks>
+      </task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <ac id="1">
+      <text>Given the project is initialized, when I configure MSAL React, then: MSAL configuration file created (`lib/auth/msal.ts`), MSAL instance configured with Azure client ID, tenant ID, redirect URI, MSAL provider component created for wrapping the app, Public client configuration for browser-based authentication</text>
+    </ac>
+    <ac id="2">
+      <text>When I configure MSAL Node, then: MSAL Node configuration for backend token validation, Token validation utility function created, User ID extraction from token claims implemented</text>
+    </ac>
+    <ac id="3">
+      <text>When I set up environment variables, then: AZURE_CLIENT_ID is configured, AZURE_CLIENT_SECRET is configured, AZURE_TENANT_ID is configured, AZURE_REDIRECT_URI is configured</text>
+    </ac>
+    <ac id="4">
+      <text>When I configure the MSAL provider wrapper, then: `app/layout.tsx` wraps application with MSAL provider component, Provider is configured with MSAL instance, Provider handles authentication state across the application</text>
+    </ac>
+    <ac id="5">
+      <text>When MSAL configuration is complete, then MSAL is ready for authentication flows (actual flows implemented in Epic 2).</text>
+    </ac>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>TakeYourPills - Architecture</title>
+        <section>Authentication</section>
+        <snippet>Microsoft Entra External ID authentication via MSAL. Frontend uses @azure/msal-react for OAuth flow. Backend uses @azure/msal-node for token validation. Tokens stored in-memory by MSAL (not localStorage). Automatic token refresh handled by MSAL.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>TakeYourPills - Architecture</title>
+        <section>Project Structure</section>
+        <snippet>MSAL configuration file should be located at `lib/auth/msal.ts`. MSAL provider should wrap application in `app/layout.tsx`. Authentication routes will be created in Epic 2 at `app/api/auth/`.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>TakeYourPills - Architecture</title>
+        <section>Decision Summary</section>
+        <snippet>Authentication uses Microsoft Entra External ID (Latest). Auth Library (Frontend): @azure/msal-react (Latest). Auth Library (Backend): @azure/msal-node (Latest). Backend token validation pattern.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>TakeYourPills - Architecture</title>
+        <section>Security-Patterns</section>
+        <snippet>All Azure configuration via environment variables, never hardcoded. Connection strings and credentials stored in environment variables. Tokens stored in-memory, not localStorage/sessionStorage per MSAL best practices.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>TakeYourPills - Epics and Stories</title>
+        <section>Story 1.3: Authentication Infrastructure (MSAL Configuration)</section>
+        <snippet>Use @azure/msal-react for frontend (PublicClientApplication). Use @azure/msal-node for backend (ConfidentialClientApplication). Follow Microsoft Entra External ID setup guide. Store configuration in environment variables. Implement token refresh handling.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/epic-1-context.md</path>
+        <title>Epic Technical Specification: Foundation & Project Setup</title>
+        <section>Story 1.3: Authentication Infrastructure (MSAL Configuration)</section>
+        <snippet>Configure MSAL React for frontend authentication. Configure MSAL Node for backend token validation. Set up environment variables for Azure configuration. Create MSAL provider wrapper for application. Implement token validation utilities.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/epic-1-context.md</path>
+        <title>Epic Technical Specification: Foundation & Project Setup</title>
+        <section>Test Strategy Summary</section>
+        <snippet>Unit Testing: Test MSAL React instance creation with valid config. Test MSAL Node instance creation with valid config. Test environment variables are loaded correctly. Test Location: `__tests__/unit/auth-config.test.ts`.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/1-3-authentication-infrastructure-msal-configuration.md</path>
+        <title>Story 1.3: Authentication Infrastructure (MSAL Configuration)</title>
+        <section>Dev Notes</section>
+        <snippet>MSAL React uses PublicClientApplication from @azure/msal-browser. MSAL Node uses ConfidentialClientApplication from @azure/msal-node. Configuration includes clientId, authority, redirectUri from environment variables. Token storage: sessionStorage or memoryStorage (prefer memoryStorage for security).</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/1-2-database-schema-and-prisma-setup.md</path>
+        <title>Story 1.2: Database Schema and Prisma Setup</title>
+        <section>Learnings from Previous Story</section>
+        <snippet>Prisma Client Singleton pattern established at `lib/prisma/client.ts` using singleton pattern with `globalThis` for Next.js serverless environments. Similar pattern may be useful for MSAL Node configuration. Environment variable template pattern established - follow same pattern for Azure variables.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file>
+        <path>takeyourpills/lib/auth/msal-browser.ts</path>
+        <kind>service</kind>
+        <symbol>getMsalInstance, msalConfiguration</symbol>
+        <lines>1-72</lines>
+        <reason>Existing MSAL React configuration for frontend. Uses PublicClientApplication from @azure/msal-browser. Configures with environment variables. Note: Story expects single `lib/auth/msal.ts` file - may need consolidation.</reason>
+      </file>
+      <file>
+        <path>takeyourpills/lib/auth/msal-node.ts</path>
+        <kind>service</kind>
+        <symbol>getMsalNodeInstance, validateToken, extractUserIdFromClaims</symbol>
+        <lines>1-153</lines>
+        <reason>Existing MSAL Node configuration for backend. Uses ConfidentialClientApplication. Includes token validation using jose library. Implements user ID extraction from claims. Note: Story expects single `lib/auth/msal.ts` file - may need consolidation.</reason>
+      </file>
+      <file>
+        <path>takeyourpills/app/layout.tsx</path>
+        <kind>component</kind>
+        <symbol>RootLayout</symbol>
+        <lines>1-42</lines>
+        <reason>Application root layout. Already wraps application with MsalProviderWrapper component. May need to verify configuration matches story requirements or update to use unified MSAL configuration.</reason>
+      </file>
+      <file>
+        <path>takeyourpills/lib/prisma/client.ts</path>
+        <kind>service</kind>
+        <symbol>prisma</symbol>
+        <lines>1-35</lines>
+        <reason>Prisma Client singleton pattern reference. Story notes mention similar pattern may be useful for MSAL Node configuration if needed. Demonstrates singleton pattern for Next.js serverless environments.</reason>
+      </file>
+    </code>
+    <dependencies>
+      <ecosystem>Node.js</ecosystem>
+      <packages>
+        <package name="@azure/msal-react" version="^3.0.22">MSAL React library for frontend authentication</package>
+        <package name="@azure/msal-node" version="^3.8.3">MSAL Node library for backend token validation</package>
+        <package name="@azure/msal-browser" version="dependency">MSAL Browser library (dependency of msal-react)</package>
+        <package name="next" version="16.0.3">Next.js framework with App Router</package>
+        <package name="react" version="19.2.0">React library</package>
+        <package name="typescript" version="^5">TypeScript language</package>
+        <package name="jose" version="^6.1.2">JWT token validation (used in existing msal-node.ts)</package>
+      </packages>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>Authentication Provider: Microsoft Entra External ID (Azure AD B2C) - specified in PRD</constraint>
+    <constraint>Frontend Library: @azure/msal-react for authentication flow - official MSAL React integration</constraint>
+    <constraint>Backend Library: @azure/msal-node for backend token validation - official MSAL Node library</constraint>
+    <constraint>Token Storage: Tokens stored in-memory by MSAL (not localStorage) per MSAL best practices</constraint>
+    <constraint>Environment Variables: All Azure configuration via environment variables, never hardcoded</constraint>
+    <constraint>TypeScript: TypeScript strict mode enabled - ensure MSAL TypeScript types are properly imported</constraint>
+    <constraint>Project Structure: MSAL configuration follows Next.js App Router patterns - `lib/auth/` directory for authentication utilities</constraint>
+    <constraint>Singleton Pattern: Consider singleton pattern for MSAL Node configuration in Next.js serverless environments (similar to Prisma Client pattern)</constraint>
+    <constraint>Naming Conventions: File names use kebab-case (msal.ts). Environment variables use AZURE_* prefix for all Azure-related variables</constraint>
+    <constraint>Security: All sensitive credentials in environment variables, never committed to git. Use .env.local for actual values, .env.example for template</constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>MSAL React Configuration</name>
+      <kind>Configuration Object</kind>
+      <signature>MSALConfiguration { auth: { clientId: string, authority: string, redirectUri: string }, cache: { cacheLocation: 'sessionStorage' | 'memoryStorage', storeAuthStateInCookie: boolean }, system: { loggerOptions: { loggerCallback, logLevel } } }</signature>
+      <path>lib/auth/msal.ts (expected) or lib/auth/msal-browser.ts (existing)</path>
+    </interface>
+    <interface>
+      <name>MSAL Node Configuration</name>
+      <kind>Configuration Object</kind>
+      <signature>MSALNodeConfiguration { auth: { clientId: string, clientSecret: string, authority: string }, system: { loggerOptions: { loggerCallback, logLevel } } }</signature>
+      <path>lib/auth/msal.ts (expected) or lib/auth/msal-node.ts (existing)</path>
+    </interface>
+    <interface>
+      <name>MSAL Provider Component</name>
+      <kind>React Component</kind>
+      <signature>MsalProvider({ instance: PublicClientApplication, children: ReactNode })</signature>
+      <path>app/layout.tsx (to wrap application)</path>
+    </interface>
+    <interface>
+      <name>Token Validation Function</name>
+      <kind>Function</kind>
+      <signature>validateToken(token: string): Promise&lt;TokenClaims | null&gt;</signature>
+      <path>lib/auth/msal.ts (expected) or lib/auth/msal-node.ts (existing)</path>
+    </interface>
+    <interface>
+      <name>User ID Extraction Function</name>
+      <kind>Function</kind>
+      <signature>extractUserIdFromClaims(claims: TokenClaims | null): string | null</signature>
+      <path>lib/auth/msal.ts (expected) or lib/auth/msal-node.ts (existing)</path>
+    </interface>
+    <interface>
+      <name>Token Claims Interface</name>
+      <kind>TypeScript Interface</kind>
+      <signature>TokenClaims { sub?: string, oid?: string, email?: string, aud?: string, iss?: string, exp?: number, iat?: number, [key: string]: unknown }</signature>
+      <path>lib/auth/msal.ts (expected) or lib/auth/msal-node.ts (existing)</path>
+    </interface>
+    <interface>
+      <name>MSAL Instance Getters</name>
+      <kind>Functions</kind>
+      <signature>getMsalInstance(): PublicClientApplication (frontend), getMsalNodeInstance(): ConfidentialClientApplication (backend)</signature>
+      <path>lib/auth/msal.ts (expected) or lib/auth/msal-browser.ts and lib/auth/msal-node.ts (existing)</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Unit Testing: Test MSAL instance creation with valid/invalid configs using Vitest framework. Configuration Testing: Verify environment variables load correctly. Test Location: `__tests__/unit/auth-config.test.ts`. Integration Testing: Full authentication flows tested in Epic 2 (when actual login is implemented). Follow testing standards from epic-1-context.md Test Strategy section.
+    </standards>
+    <locations>
+      __tests__/unit/auth-config.test.ts (unit tests for MSAL configuration)
+      __tests__/integration/ (integration tests for MSAL provider wrapper - optional, deferred to Epic 2)
+    </locations>
+    <ideas>
+      <test ac="1">
+        <idea>Test MSAL React instance creation with valid configuration - verify instance is created without errors</idea>
+      </test>
+      <test ac="1">
+        <idea>Test MSAL React instance creation with missing environment variables - verify error handling</idea>
+      </test>
+      <test ac="2">
+        <idea>Test MSAL Node instance creation with valid configuration - verify instance is created without errors</idea>
+      </test>
+      <test ac="2">
+        <idea>Test MSAL Node instance creation with missing environment variables - verify error handling</idea>
+      </test>
+      <test ac="2">
+        <idea>Test token validation function with valid token - verify claims extraction</idea>
+      </test>
+      <test ac="2">
+        <idea>Test token validation function with invalid/expired token - verify null return</idea>
+      </test>
+      <test ac="2">
+        <idea>Test user ID extraction from token claims - verify oid/sub extraction logic</idea>
+      </test>
+      <test ac="3">
+        <idea>Test environment variable loading - verify all AZURE_* variables are accessible</idea>
+      </test>
+      <test ac="4">
+        <idea>Test MSAL provider wrapper - verify application renders without errors (optional, deferred to Epic 2)</idea>
+      </test>
+    </ideas>
+  </tests>
+</story-context>
+

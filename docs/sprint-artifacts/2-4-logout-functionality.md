@@ -1,6 +1,6 @@
 # Story 2.4: Logout Functionality
 
-Status: review
+Status: done
 
 ## Story
 
@@ -29,45 +29,45 @@ So that I can securely end my session.
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Create Header Component with Logout Button** (AC: #1)
-  - [ ] Create `components/layout/Header.tsx` component
-  - [ ] Add user menu or logout button in header
-  - [ ] Display user email or name when authenticated
-  - [ ] Add logout button/option in user menu
-  - [ ] Style with Tailwind CSS and shadcn/ui components
-  - [ ] Make header responsive for mobile devices
+- [X] **Task 1: Create Header Component with Logout Button** (AC: #1)
+  - [X] Create `components/layout/Header.tsx` component
+  - [X] Add user menu or logout button in header
+  - [X] Display user email or name when authenticated
+  - [X] Add logout button/option in user menu
+  - [X] Style with Tailwind CSS and shadcn/ui components
+  - [X] Make header responsive for mobile devices
 
-- [ ] **Task 2: Implement Logout Functionality** (AC: #1, #2)
-  - [ ] Create logout handler function using MSAL `logoutRedirect()` or `logoutPopup()`
-  - [ ] Clear MSAL tokens and session data
-  - [ ] Clear any application state (if needed)
-  - [ ] Redirect to login page after logout
-  - [ ] Handle logout errors gracefully
+- [X] **Task 2: Implement Logout Functionality** (AC: #1, #2)
+  - [X] Create logout handler function using MSAL `logoutRedirect()` or `logoutPopup()`
+  - [X] Clear MSAL tokens and session data
+  - [X] Clear any application state (if needed)
+  - [X] Redirect to login page after logout
+  - [X] Handle logout errors gracefully
 
-- [ ] **Task 3: Integrate Header into Layout** (AC: #1)
-  - [ ] Add Header component to root layout or dashboard layout
-  - [ ] Ensure header is visible on all protected pages
-  - [ ] Hide header on login page (or show minimal version)
-  - [ ] Test header visibility across different pages
+- [X] **Task 3: Integrate Header into Layout** (AC: #1)
+  - [X] Add Header component to root layout or dashboard layout
+  - [X] Ensure header is visible on all protected pages
+  - [X] Hide header on login page (or show minimal version)
+  - [X] Test header visibility across different pages
 
-- [ ] **Task 4: Verify Session Cleanup** (AC: #2)
-  - [ ] Verify MSAL clears tokens from memory
-  - [ ] Verify sessionStorage is cleared (MSAL handles this)
-  - [ ] Verify no sensitive data remains in browser storage
-  - [ ] Test that API requests fail after logout (401 responses)
+- [X] **Task 4: Verify Session Cleanup** (AC: #2)
+  - [X] Verify MSAL clears tokens from memory
+  - [X] Verify sessionStorage is cleared (MSAL handles this)
+  - [X] Verify no sensitive data remains in browser storage
+  - [X] Test that API requests fail after logout (401 responses)
 
-- [ ] **Task 5: Test Protected Route Access After Logout** (AC: #3)
-  - [ ] Test that protected routes redirect to login after logout
-  - [ ] Test that user can log in again after logout
-  - [ ] Verify session is completely cleared between logins
+- [X] **Task 5: Test Protected Route Access After Logout** (AC: #3)
+  - [X] Test that protected routes redirect to login after logout
+  - [X] Test that user can log in again after logout
+  - [X] Verify session is completely cleared between logins
 
-- [ ] **Task 6: Testing** (AC: All)
-  - [ ] Unit test: Logout button triggers logout function
-  - [ ] Unit test: Logout clears MSAL session
-  - [ ] Unit test: Logout redirects to login page
-  - [ ] Integration test: Protected routes inaccessible after logout
-  - [ ] Integration test: User can log in again after logout
-  - [ ] Integration test: No data leakage between sessions
+- [X] **Task 6: Testing** (AC: All)
+  - [X] Unit test: Logout button triggers logout function
+  - [X] Unit test: Logout clears MSAL session
+  - [X] Unit test: Logout redirects to login page
+  - [X] Integration test: Protected routes inaccessible after logout
+  - [X] Integration test: User can log in again after logout
+  - [X] Integration test: No data leakage between sessions
 
 ## Dev Notes
 

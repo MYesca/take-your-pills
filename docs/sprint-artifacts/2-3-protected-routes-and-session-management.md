@@ -1,6 +1,6 @@
 # Story 2.3: Protected Routes and Session Management
 
-Status: review
+Status: done
 
 ## Story
 
@@ -31,53 +31,53 @@ So that I don't have to log in repeatedly.
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Create Next.js Middleware for Route Protection** (AC: #2)
-  - [ ] Create `middleware.ts` at project root
-  - [ ] Define protected route patterns (e.g., `/dashboard`, `/medications`, `/settings`)
-  - [ ] Check authentication status using MSAL (client-side check or API call)
-  - [ ] Redirect unauthenticated users to `/login`
-  - [ ] Allow authenticated users to access protected routes
-  - [ ] Preserve intended destination in redirect (query param or state)
+- [X] **Task 1: Create Next.js Middleware for Route Protection** (AC: #2)
+  - [X] Create `middleware.ts` at project root
+  - [X] Define protected route patterns (e.g., `/dashboard`, `/medications`, `/settings`)
+  - [X] Check authentication status using MSAL (client-side check or API call)
+  - [X] Redirect unauthenticated users to `/login`
+  - [X] Allow authenticated users to access protected routes
+  - [X] Preserve intended destination in redirect (query param or state)
 
-- [ ] **Task 2: Implement Authentication Check in Layout** (AC: #1, #3)
-  - [ ] Update `app/layout.tsx` to check authentication status
-  - [ ] Use MSAL React hooks to check if user is authenticated
-  - [ ] Redirect to login if not authenticated (for protected routes)
-  - [ ] Handle session expiration gracefully
-  - [ ] Display session expired message when appropriate
+- [X] **Task 2: Implement Authentication Check in Layout** (AC: #1, #3)
+  - [X] Update `app/layout.tsx` to check authentication status
+  - [X] Use MSAL React hooks to check if user is authenticated
+  - [X] Redirect to login if not authenticated (for protected routes)
+  - [X] Handle session expiration gracefully
+  - [X] Display session expired message when appropriate
 
-- [ ] **Task 3: Create Protected Route Component/HOC** (AC: #1, #2)
-  - [ ] Create `components/auth/ProtectedRoute.tsx` or similar
-  - [ ] Wrap protected pages with authentication check
-  - [ ] Show loading state while checking authentication
-  - [ ] Redirect to login if not authenticated
-  - [ ] Render page content if authenticated
+- [X] **Task 3: Create Protected Route Component/HOC** (AC: #1, #2)
+  - [X] Create `components/auth/ProtectedRoute.tsx` or similar
+  - [X] Wrap protected pages with authentication check
+  - [X] Show loading state while checking authentication
+  - [X] Redirect to login if not authenticated
+  - [X] Render page content if authenticated
 
-- [ ] **Task 4: Implement Session Persistence** (AC: #1, #4)
-  - [ ] Verify MSAL stores tokens in-memory (already configured)
-  - [ ] Ensure session persists across page navigations
-  - [ ] Test token refresh flow (MSAL handles automatically)
-  - [ ] Verify no interruption during token refresh
+- [X] **Task 4: Implement Session Persistence** (AC: #1, #4)
+  - [X] Verify MSAL stores tokens in-memory (already configured)
+  - [X] Ensure session persists across page navigations
+  - [X] Test token refresh flow (MSAL handles automatically)
+  - [X] Verify no interruption during token refresh
 
-- [ ] **Task 5: Handle Session Expiration** (AC: #3)
-  - [ ] Detect when token expires or session is invalid
-  - [ ] Redirect to login with session expired message
-  - [ ] Display user-friendly error message
-  - [ ] Allow user to log in again
+- [X] **Task 5: Handle Session Expiration** (AC: #3)
+  - [X] Detect when token expires or session is invalid
+  - [X] Redirect to login with session expired message
+  - [X] Display user-friendly error message
+  - [X] Allow user to log in again
 
-- [ ] **Task 6: Update Dashboard Route** (AC: #1, #2)
-  - [ ] Mark dashboard route (`/`) as protected
-  - [ ] Ensure authentication check on dashboard load
-  - [ ] Redirect to login if not authenticated
-  - [ ] Display dashboard content if authenticated
+- [X] **Task 6: Update Dashboard Route** (AC: #1, #2)
+  - [X] Mark dashboard route (`/`) as protected
+  - [X] Ensure authentication check on dashboard load
+  - [X] Redirect to login if not authenticated
+  - [X] Display dashboard content if authenticated
 
-- [ ] **Task 7: Testing** (AC: All)
-  - [ ] Unit test: Protected route component redirects when not authenticated
-  - [ ] Unit test: Protected route component renders content when authenticated
-  - [ ] Integration test: Next.js middleware redirects unauthenticated users
-  - [ ] Integration test: Session persists across page navigations
-  - [ ] Integration test: Session expiration triggers redirect to login
-  - [ ] Integration test: Token refresh works seamlessly
+- [X] **Task 7: Testing** (AC: All)
+  - [X] Unit test: Protected route component redirects when not authenticated
+  - [X] Unit test: Protected route component renders content when authenticated
+  - [X] Integration test: Next.js middleware redirects unauthenticated users
+  - [X] Integration test: Session persists across page navigations
+  - [X] Integration test: Session expiration triggers redirect to login
+  - [X] Integration test: Token refresh works seamlessly
 
 ## Dev Notes
 
